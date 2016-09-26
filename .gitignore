@@ -1,0 +1,11 @@
+node_modules
+vendor
+.idea
+.env
+.phpintel
+.DS_STORE
+Homestead.json
+Homestead.yaml
+public/storage
+public/app
+public/**/*.min.*

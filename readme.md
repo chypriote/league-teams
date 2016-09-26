@@ -1,0 +1,1 @@
+<p align="center"><a href="https://laravel.com" target="_blank"><img width="150" src="https://laravel.com/laravel.png"></a><a href="http://aurelia.io/" target="_blank"><img width="150" src="https://cdn.auth0.com/blog/aurelia-logo.png"></a></p>
