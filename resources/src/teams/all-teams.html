@@ -1,0 +1,25 @@
+<template>
+
+	<div class="card">
+		<header>
+			<h1>Equipes</h1>
+		</header>
+	</div>
+
+	<div class="columns col-multiline">
+		<div repeat.for="team of teams" class="column col-3">
+
+			<div class="card ${team.id === $parent.selectedId ? 'active' : ''}">
+				<header class="small">${team.name}</header>
+				<div class="card-body">
+					<a route-href="route: team; params.bind: {id: team.id}" click.delegate="$parent.select(team)">
+						<h4 class="list-group-item-heading">Hey</h4>
+						<p class="list-group-item-text">Ho</p>
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</template>

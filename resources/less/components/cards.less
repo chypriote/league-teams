@@ -1,0 +1,68 @@
+// Cards
+.card {
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+	position: relative;
+	border: 1px solid #dadada;
+	border-radius: 4px;
+	overflow: hidden;
+	max-height: 100%;
+	margin-bottom: 1em;
+	background: #fff;
+
+	header {
+		flex-wrap: wrap;
+		background-color: #f7f7f7;
+		box-shadow: inset 0 1px 0 0 #FFF;
+		position: relative;
+		padding: 1.5rem;
+		color: #70519E;
+		position: relative;
+		text-align: center;
+
+		&.small {padding: .5rem;}
+
+		h1 {font-weight: 400;font-size: 3rem;line-height: 1.5;margin: 0;}
+		h3 {font-weight: 400;font-size: 2rem;line-height: 1.5;margin: 0;}
+	}
+
+	.card-header,
+	.card-body,
+	.card-footer {
+		padding: 1.5rem 1.5rem 0 1.5rem;
+
+		&:last-child {
+			padding-bottom: 1.5rem;
+		}
+	}
+	.card-image {
+		padding-top: 1.5rem;
+
+		&:first-child {
+			padding-top: 0;
+
+			img {
+				border-top-left-radius: .3rem;
+				border-top-right-radius: .3rem;
+			}
+		}
+
+		&:last-child {
+			img {
+				border-bottom-left-radius: .3rem;
+				border-bottom-right-radius: .3rem;
+			}
+		}
+	}
+	.card-title {
+		font-size: 1.4em;
+		line-height: 1;
+		margin-bottom: .5rem;
+		margin-top: 0;
+	}
+	.card-meta {
+		color: lighten(@body-font-color, 50%);
+		font-size: 1em;
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}

@@ -26,7 +26,9 @@
 		"id": "less",
 		"displayName": "Less",
 		"fileExtension": ".less",
-		"source": "less\\main.less"
+		"entry": "less\\main.less",
+		"source": "less\\**\\*.less",
+		"target": "..\\public\\app"
 	},
 	"editor": {
 		"id": "sublime",
@@ -115,6 +117,7 @@
 					"aurelia-router",
 					"aurelia-task-queue",
 					"aurelia-templating",
+					"aurelia-fetch-client",
 					"aurelia-templating-binding",
 					{
 						"name": "text",

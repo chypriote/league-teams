@@ -15,16 +15,12 @@ class Team extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'tag', 'elo',
+		'name',
 	];
 
-	public function teams()
+	public function players()
 	{
-		return $this->hasMany('App\Team');
+		return $this->belongsToMany('App\Models\Player', 'players_teams')->withPivot('player_id', 'team_id', 'is_current');
 	}
 
-	public function games()
-	{
-		return $this->hasMany('App\Game');
-	}
 }

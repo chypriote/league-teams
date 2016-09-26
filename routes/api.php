@@ -21,3 +21,6 @@ Route::get('/user', function (Request $request) {
 Route::resource('teams', 'TeamsController');
 
 Route::resource('players', 'PlayersController');
+
+Route::get('players/validate-id/{id}', 'PlayersController@idCheck')->name('validate-id');
+Route::post('players/join-team', 'PlayersController@joinTeam')->name('join-team');

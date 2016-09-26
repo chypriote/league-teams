@@ -2,6 +2,7 @@ import * as gulp from 'gulp';
 import * as browserSync from 'browser-sync';
 import * as historyApiFallback from 'connect-history-api-fallback/lib';
 import * as project from '../aurelia.json';
+import processCSS from './process-css';
 import build from './build';
 import {CLIOptions} from 'aurelia-cli';
 
@@ -18,17 +19,9 @@ let serve = gulp.series(
   build,
   done => {
     browserSync({
+      proxy: 'teams.api',
       online: false,
-      open: false,
-      port: 9000,
-      logLevel: 'silent',
-      server: {
-        baseDir: ['.'],
-        middleware: [historyApiFallback(), function(req, res, next) {
-          res.setHeader('Access-Control-Allow-Origin', '*');
-          next();
-        }]
-      }
+      open: false
     }, function (err, bs) {
       let urls = bs.options.get('urls').toJS();
       console.log(`Application Available At: ${urls.local}`);

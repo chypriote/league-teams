@@ -5,39 +5,46 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Team;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Validator;
 
 
 class TeamsController extends Controller
 {
 	public function index()
 	{
-		return Team::all();
+		return new JsonResponse(Team::all());
 	}
 
 	public function show($id)
 	{
-		return Team::findOrFail($id);
+		if ($team = Team::find($id))
+			return new JsonResponse($team);
+		return new JsonResponse(null);
 	}
 
-	public function store()
+	public function store(Request $request)
 	{
-
 		$validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-        'tag' => 'required|max:10',
+        'name' => 'required',
     ]);
 
     if ($validator->fails()) {
         return new JsonResponse($validator->errors(), 422);
     }
 
-		$team = new Team();
+		try {
+			$team = new Team();
 
-		$team->name = $request->name;
-		$team->tag = $request->tag;
-		$team->elo = Team::STARTING_ELO;
+			$team->name = $request->name;
 
-		$team->save();
+			$team->save();
+		} catch (\Exception $e) {
+			if ($e->getCode() == 23000)
+				return new JsonResponse('Team already exists', 400);
+			return new JsonResponse($e->getMessage(), 400);
+		}
+
 		return new JsonResponse($team, 201);
 	}
 
@@ -48,7 +55,7 @@ class TeamsController extends Controller
 
 	public function destroy($id)
 	{
-		if ($team = Team::findOrFail($id))
+		if ($team = Team::find($id))
 			return new JsonResponse($team->delete(), 200);
 		return new JsonResponse(null, 404);
 	}

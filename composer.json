@@ -1,12 +1,15 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "chypriote/team-elo",
+    "description": "MyElo replacement with Laravel and AureliaJS",
+    "keywords": ["framework", "laravel", "aurelia"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*"
+        "laravel/framework": "5.3.*",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "barryvdh/laravel-cors": "^0.8.2",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -41,7 +44,9 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+						"php artisan clear-compiled",
+						"php artisan ide-helper:generate",
+						"php artisan optimize"
         ]
     },
     "config": {
