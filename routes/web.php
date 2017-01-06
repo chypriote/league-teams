@@ -16,10 +16,3 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-// Route::get('/teams', [
-// 	'middleware' => ['auth'],
-// 	'uses' => function () {
-// 		echo "You are allowed to view this page";
-// 	}
-// ]);

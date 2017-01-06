@@ -62,6 +62,7 @@ class PlayersController extends Controller
 
 		try {
 			$player = new Player($request->all());
+			$player->riot_id = $request->riot_id;
 			$player->save();
 		} catch (\Exception $e) {
 			if ($e->getCode() == 23000)
