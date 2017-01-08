@@ -1,0 +1,24 @@
+<template>
+	<require from="./players/player-list"></require>
+	<require from="./players/player-add"></require>
+
+	<nav class="navbar">
+		<div class="container">
+			<div class="nav-item" repeat.for="row of router.navigation">
+				<a href.bind="row.href" class.bind="row.isActive ? 'active' : ''">
+					<span class="icon icon-link"></span> ${row.title}
+				</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="main container">
+		<div class="columns">
+
+			<div class="column col-12">
+				<router-view></router-view>
+			</div>
+
+		</div>
+	</div>
+</template>

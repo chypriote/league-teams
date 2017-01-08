@@ -1,0 +1,31 @@
+<template>
+	<h3>Equipes</h3>
+	<div class="card inline" repeat.for="team of teams">
+		<header class="bold">
+			<img src="${team.image}" show.bind="team.logo" class="img-team-logo">
+			${team.name}
+		</header>
+		<div class="card-body">
+			<div class="column col-centered">
+				<a route-href="route: player; params.bind: {id: team.top.id}" if.bind="team.top">${team.top.name}</a>
+				<span if.bind="!team.top">-</span>
+			</div>
+			<div class="column col-centered">
+				<a route-href="route: player; params.bind: {id: team.jungle.id}" if.bind="team.top">${team.jungle.name}</a>
+				<span if.bind="!team.jungle">-</span>
+			</div>
+			<div class="column col-centered">
+				<a route-href="route: player; params.bind: {id: team.mid.id}" if.bind="team.mid">${team.mid.name}</a>
+				<span if.bind="!team.mid">-</span>
+			</div>
+			<div class="column col-centered">
+				<a route-href="route: player; params.bind: {id: team.adc.id}" if.bind="team.adc">${team.adc.name}</a>
+				<span if.bind="!team.adc">-</span>
+			</div>
+			<div class="column col-centered">
+				<a route-href="route: player; params.bind: {id: team.support.id}" if.bind="team.support">${team.support.name}</a>
+				<span if.bind="!team.support">-</span>
+			</div>
+		</div>
+	</div>
+</template>

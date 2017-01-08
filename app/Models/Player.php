@@ -12,29 +12,72 @@ class Player extends Model
 	const POSITION_ADC = 'adc';
 	const POSITION_SUPPORT = 'support';
 
-	const TIER_CHALLENGER = 'CHALLENGER';
-	const TIER_MASTER = 'MASTER';
-	const TIER_DIAMOND = 'DIAMOND';
-	const TIER_PLATINUM = 'PLATINUM';
+	const TIER_CHALLENGER = '10_challenger';
+	const TIER_MASTER = '20_master';
+	const TIER_DIAMOND = '30_diamond';
+	const TIER_PLATINUM = '40_platinum';
 
 	protected $fillable = [
-		'name', 'summoner_name', 'position', 'tier', 'division', 'comment'
+		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment'
 	];
 	protected $guarded = [
 		'riot_id'
 	];
 
-	public function teams()
+	public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
+
+	public function previousteam()
 	{
 		return $this->belongsToMany('App\Models\Team', 'players_teams')->withPivot('team_id', 'player_id', 'is_current');
 	}
 
-	static private function tierNumber($tier)
+    /**
+     * Returns a formatted tier for the frontend app
+     *
+     * @param $tier
+     * @return null|string
+     */
+    static public function tierText($tier)
+	{
+		switch ($tier) {
+			case Player::TIER_CHALLENGER:
+				return 'CHALLENGER';
+			case Player::TIER_MASTER:
+				return 'MASTER';
+			case Player::TIER_DIAMOND:
+				return 'DIAMOND';
+			case Player::TIER_PLATINUM:
+				return 'PLATINUM';
+			default:
+				return null;
+		}
+	}
+
+    /**
+     * Returns the number corresponding to a tier
+     *
+     * @param $tier
+     * @return mixed
+     */
+    static private function tierNumber($tier)
 	{
 		return array_search($tier, Player::getAvailableTiers());
 	}
 
-	static public function isHigherRank($old_tier, $old_division, $new_tier, $new_division)
+    /**
+     * Returns wether the new rank is higher than the previous one
+     *
+     * @param $old_tier
+     * @param $old_division
+     * @param $new_tier
+     * @param $new_division
+     * @return bool
+     * @throws \Exception
+     */
+    static public function isHigherRank($old_tier, $old_division, $new_tier, $new_division)
 	{
 		if (!in_array($old_tier, Player::getAvailableTiers()) || !in_array($new_tier, Player::getAvailableTiers())) {
 			throw new \Exception('[isHigherRank] invalid tier name');
@@ -47,12 +90,23 @@ class Player extends Model
 		return $old_division < $new_division;
 	}
 
-	static public function isValidDivision($division)
+    /**
+     * Checks validity of a division
+     *
+     * @param $division
+     * @return bool
+     */
+    static public function isValidDivision($division)
 	{
 		return $division > 0 && $division < 6;
 	}
 
-	static public function getAvailableTiers()
+    /**
+     * Returns existing tiers
+     *
+     * @return array
+     */
+    static public function getAvailableTiers()
 	{
 		return [
 			Player::TIER_CHALLENGER,
@@ -62,7 +116,12 @@ class Player extends Model
 		];
 	}
 
-	static public function getAvailablePositions()
+    /**
+     * Returns existing positions
+     *
+     * @return array
+     */
+    static public function getAvailablePositions()
 	{
 		return [
 			Player::POSITION_TOP,

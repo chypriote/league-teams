@@ -20,7 +20,7 @@ class Team extends Model
 
 	public function players()
 	{
-		return $this->belongsToMany('App\Models\Player', 'players_teams')->withPivot('player_id', 'team_id', 'is_current');
+		return $this->hasMany('App\Models\Player');
 	}
 
 }

@@ -23,7 +23,12 @@ class PlayersController extends Controller
 	 */
 	public function index()
 	{
-		return new JsonResponse(Player::all());
+		$players = Player::orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		foreach ($players as $player) {
+			$player->team;
+			$player->tier = Player::tierText($player->tier);
+		}
+		return new JsonResponse($players);
 	}
 
 	/**
@@ -33,10 +38,12 @@ class PlayersController extends Controller
 	public function show($id)
 	{
 		$player = Player::find($id);
-		$player->load('teams');
 
-		if ($player)
+		if ($player) {
+			$player->team;
+			$player->tier = Player::tierText($player->tier);
 			return new JsonResponse($player);
+		}
 		return new JsonResponse(null);
 	}
 
@@ -53,6 +60,7 @@ class PlayersController extends Controller
 			'position' => 'required|in:' . implode(',', Player::getAvailablePositions()),
 			'tier' => 'required|in:' . implode(',', Player::getAvailableTiers()),
 			'division' => 'required|numeric|min:1|max:5',
+			'lps' => 'required|numeric|min:0',
 			'comment' => 'text'
 		]);
 
@@ -80,6 +88,7 @@ class PlayersController extends Controller
 			'position' => 'nullable|in:' . implode(',', Player::getAvailablePositions()),
 			'tier' => 'nullable|in:' . implode(',', Player::getAvailableTiers()),
 			'division' => 'nullable|numeric|min:1|max:5',
+			'lps' => 'nullable|numeric|min:0',
 			'comment' => 'nullable|string'
 		]);
 
@@ -121,8 +130,8 @@ class PlayersController extends Controller
 		if (!($team = Team::find($request->team_id)))
 			return new JsonResponse('Team not found', 400);
 
-		if ($player->teams()->save($team))
-			return new JsonResponse($player->teams, 200);
+		if ($team->players()->save($player))
+			return new JsonResponse($team, 200);
 
 		return new JsonResponse('An error has occured', 400);
 	}

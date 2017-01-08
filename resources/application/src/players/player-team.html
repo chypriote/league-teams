@@ -1,0 +1,40 @@
+<template>
+	<div class="card">
+		<header class="small">
+			<h4>Equipe</h4>
+		</header>
+		<div class="card-body">
+			<div class="columns">
+				<div class="column col-12 col-centered" show.bind="!edition">
+					<img src="${team.image}" alt="${team.name}" if.bind="team">
+					<header if.bind="team">
+						<h5 class="bold">${team.name}</h5>
+					</header>
+
+					<p if.bind="!team">Aucune équipe enregistrée.</p>
+				</div>
+
+				<div class="column col-12" show.bind="edition">
+					<form submit.delegate="addTeam()">
+						<fieldset class="form-group">
+							<label class="form-label">Team</label>
+							<select class="form-select" value.bind="selectedTeam">
+								<option model.bind="team" repeat.for="team of available">${team.name}</option>
+							</select>
+						</fieldset>
+
+						<div class="form-bar">
+							<button type="submit" class="btn" click.delegate="edit()">Annuler</button>
+							<button type="submit" class="btn btn-primary">Ajouter</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="card-meta form-bar" show.bind="!edition">
+			<button type="button" class="btn btn-sm" click.delegate="edit()">
+				<i class="fa fa-pencil"></i>
+			</button>
+		</div>
+	</div>
+</template>

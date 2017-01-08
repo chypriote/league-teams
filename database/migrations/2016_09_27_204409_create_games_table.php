@@ -15,13 +15,13 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-						$table->integer('red_team')->index();
-						$table->integer('blue_team')->index();
-						$table->dateTime('date');
-						$table->boolean('winner');
-						$table->boolean('is_ranked');
-						$table->boolean('is_offline');
-						$table->string('event_name');
+				$table->integer('red_team')->index();
+				$table->integer('blue_team')->index();
+				$table->dateTime('date');
+				$table->boolean('winner');
+				$table->boolean('is_ranked');
+				$table->boolean('is_offline');
+				$table->string('event_name');
             $table->timestamps();
         });
     }

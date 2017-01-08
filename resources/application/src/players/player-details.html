@@ -1,0 +1,68 @@
+<template>
+	<require from="./player-team"></require>
+
+	<div class="container">
+		<div class="columns">
+			<div class="column col-12">
+				<div class="card">
+					<header>
+						<h3>${player.name}</h3>
+					</header>
+					<div class="card-body">
+						<div class="columns">
+							<div class="column col-4 col-flexed">
+								<div class="card">
+									<header class="small">Nom d'invocateur</header>
+									<div class="card-body bold text-centered">${player.summoner_name}</div>
+								</div>
+								<div class="card expanded">
+									<header class="small">Commentaire</header>
+									<div class="card-body bold">${player.comment}</div>
+								</div>
+							</div>
+							<div class="column col-4 col-centered">
+								<div class="card">
+									<img src="${player.images.role}" alt="${player.position}">
+									<header>
+										<h5 class="bold">${player.position}</h5>
+									</header>
+								</div>
+							</div>
+							<div class="column col-4 col-centered">
+								<div class="card">
+									<img src="${player.images.rank}" alt="${player.tier} ${player.division}">
+									<header>
+										<h5 class="bold">${player.tier}
+											<span if.bind="player.tier != 'CHALLENGER' && player.tier != 'MASTER'"> ${player.division}</span>
+											<span if.bind="player.tier == 'CHALLENGER' || player.tier == 'MASTER'"> ${player.lps} LP</span>
+										</h5>
+									</header>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-meta form-bar">
+						<a route-href="route: player-edit; params.bind: {id: player.id}" class="btn btn-sm">
+							<i class="fa fa-pencil"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="columns">
+			<player-team class="column col-4" team.bind="player.team" pid.bind="player.id"></player-team>
+<!-- 			<div class="column col-4">
+				<div class="card">
+					<header>Names</header>
+					<div class="card-body">Test</div>
+				</div>
+			</div>
+			<div class="column col-4">
+				<div class="card">
+					<header>Names</header>
+					<div class="card-body">Test</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</template>

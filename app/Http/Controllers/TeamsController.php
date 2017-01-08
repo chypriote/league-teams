@@ -13,7 +13,15 @@ class TeamsController extends Controller
 {
 	public function index()
 	{
-		return new JsonResponse(Team::all());
+		$teams = Team::all();
+		foreach ($teams as $team) {
+			$team->load('players');
+			foreach ($team['players'] as $player) {
+				$team[$player['position']] = [ 'name' => $player['name'], 'id' => $player['id']];
+			}
+			unset($team['players']);
+		}
+		return new JsonResponse($teams);
 	}
 
 	public function show($id)
@@ -37,6 +45,7 @@ class TeamsController extends Controller
 			$team = new Team();
 
 			$team->name = $request->name;
+			$team->logo = $request->logo;
 
 			$team->save();
 		} catch (\Exception $e) {

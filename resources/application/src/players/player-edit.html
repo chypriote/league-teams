@@ -1,0 +1,101 @@
+<template>
+	<div class="toast toast-success" show.bind="success">Le joueur a bien été enregistré.</div>
+	<div class="toast toast-danger" show.bind="error">${error}</div>
+	<div class="container">
+		<div class="columns">
+			<div class="card col-12">
+				<header>
+					<h3>Edition de ${player.name}</h3>
+				</header>
+				<div class="card-body container">
+					<form submit.delegate="editPlayer()">
+						<div class="columns">
+							<div class="column col-6">
+
+									<fieldset class="form-group">
+										<label for="riot_id" class="form-label">Riot ID</label>
+										<input id="riot_id" value.bind="player.riot_id" type="text" class="form-input" disabled>
+									</fieldset>
+
+									<fieldset class="form-group">
+										<label for="name" class="form-label">Nom</label>
+										<input id="name" value.bind="player.name" type="text" class="form-input">
+									</fieldset>
+
+									<fieldset class="form-group">
+										<label for="position" class="form-label">Position</label>
+										<div class="btn-group">
+											<button
+												click.trigger="player.position = 'top'"
+												class="btn"
+												class.bind="player.position === 'top' ? 'active' : ''"
+											>Top</button>
+											<button
+												click.trigger="player.position = 'jungle'"
+												class="btn"
+												class.bind="player.position === 'jungle' ? 'active' : ''"
+											>Jungle</button>
+											<button
+												click.trigger="player.position = 'mid'"
+												class="btn"
+												class.bind="player.position === 'mid' ? 'active' : ''"
+											>Mid</button>
+											<button
+												click.trigger="player.position = 'adc'"
+												class="btn"
+												class.bind="player.position === 'adc' ? 'active' : ''"
+											>ADC</button>
+											<button
+												click.trigger="player.position = 'support'"
+												class="btn"
+												class.bind="player.position === 'support' ? 'active' : ''"
+											>Support</button>
+										</div>
+									</fieldset>
+
+									<fieldset class="form-group">
+										<label for="comment" class="form-label">Commentaire</label>
+										<textarea id="comment" value.bind="player.comment" type="text" class="form-input" rows="5"></textarea>
+									</fieldset>
+							</div>
+							<div class="column col-6">
+
+								<fieldset class="form-group">
+									<label for="summoner_name" class="form-label">Nom d'invocateur</label>
+									<input id="summoner_name" value.bind="player.summoner_name" type="text" class="form-input" disabled>
+								</fieldset>
+
+								<fieldset class="form-group">
+									<label for="rank" class="form-label">Classement</label>
+									<input id="rank" value="${player.tier + ' ' + player.division}" type="text" class="form-input" disabled>
+								</fieldset>
+
+								<div class="form-bar">
+									<button type="submit" class="btn" class.bind="refreshing ?'loading':''" click.delegate="updatePlayer()" disabled.bind="refreshed">
+										${refreshed ? 'Mis à jour' : 'Mettre à jour'}
+									</button>
+								</div>
+
+								<fieldset class="form-group col-12" show.bind="player.leagues">
+									<label for="leagues" class="form-label">Leagues</label>
+									<div class="card inline" repeat.for="league of player.leagues">
+										<header>${league.queue}</header>
+										<div class="card-body">${league.tier} ${league.entries[0].division} ${league.entries[0].leaguePoints} LP</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						<div class="form-bar">
+							<button type="cancel" class="btn" click.delegate="router.navigateToRoute('player', {id: player.id})">
+								Annuler
+							</button>
+							<button type="submit" class="btn btn-primary" disabled.bind="!player.position">
+								Enregistrer
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

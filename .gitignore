@@ -6,6 +6,5 @@ vendor
 .DS_STORE
 Homestead.json
 Homestead.yaml
-public/storage
-public/app
-public/**/*.min.*
+public/
+storage/framework

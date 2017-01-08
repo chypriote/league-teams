@@ -7,23 +7,25 @@ use App\Models\Team;
 
 class PlayerManager {
 
-	public function createPlayer($object) {
+	public function createPlayer($object)
+    {
 
-			try {
-				$player = new Player();
+        try {
+            $player = new Player();
 
-				$player->riot_id = $object->riot_id;
-				$player->name = $object->name;
-				$player->summoner_name = $object->summoner_name;
-				$player->position = $object->position;
-				$player->tier = $object->tier;
-				$player->division = $object->division;
-				$player->comment = $object->comment;
-			} catch (\Exception $e) {
-				return false;
-			}
+            $player->riot_id = $object->riot_id;
+            $player->name = $object->name;
+            $player->summoner_name = $object->summoner_name;
+            $player->position = $object->position;
+            $player->tier = $object->tier;
+            $player->division = $object->division;
+            $player->lps = $object->lps;
+            $player->comment = $object->comment;
+        } catch (\Exception $e) {
+            return false;
+        }
 
-			return $player;
+        return $player;
 	}
 
 	public function updatePlayer(Player $player, $object)
@@ -32,6 +34,7 @@ class PlayerManager {
 		$player->position = $object->position ? $object->position : $player->position;
 		$player->tier = $object->tier ? $object->tier : $player->tier;
 		$player->division = $object->division ? $object->division : $player->division;
+		$player->lps = $object->lps ? $object->lps : $player->lps;
 		$player->comment = $object->comment ? $object->comment : $player->comment;
 
 		return $player;

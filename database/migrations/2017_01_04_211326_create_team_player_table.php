@@ -16,8 +16,8 @@ class CreateTeamPlayerTable extends Migration
 		Schema::create('players_teams', function (Blueprint $table) {
 			$table->increments('id')->index();
 			$table->boolean('is_current')->nullable();
-      $table->integer('player_id');
-      $table->integer('team_id');
+		    $table->integer('player_id');
+      		$table->integer('team_id');
 		});
 	}
 
@@ -28,6 +28,6 @@ class CreateTeamPlayerTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('players_teams');
+		Schema::dropIfExists('players_teams');
 	}
 }
