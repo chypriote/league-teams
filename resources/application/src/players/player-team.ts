@@ -12,10 +12,6 @@ export class PlayerTeam {
 		this.api.getTeams().then(data => this.available = data);
 	}
 
-	attached() {
-		console.log(this.team);
-	}
-
 	edit() {
 		this.edition = !this.edition;
 	}

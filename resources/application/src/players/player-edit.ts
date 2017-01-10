@@ -93,7 +93,8 @@ export class PlayerEdit {
 
 		this.api.updatePlayer(player)
 			.then(function (response) {
-    			vm.router.navigateToRoute('player', {id: player.id});
+				console.log(response);
+				vm.router.navigateToRoute('player', {id: player.id});
 			}, function (error) {
 				vm.error = '[' + error.response + '] Impossible de sauvegarder le joueur';
 			});

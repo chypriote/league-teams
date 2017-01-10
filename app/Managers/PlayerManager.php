@@ -31,10 +31,11 @@ class PlayerManager {
 	public function updatePlayer(Player $player, $object)
 	{
 		$player->name = $object->name ? $object->name : $player->name;
+		$player->summoner_name = $object->summoner_name ? $object->summoner_name : $player->summoner_name;
 		$player->position = $object->position ? $object->position : $player->position;
 		$player->tier = $object->tier ? $object->tier : $player->tier;
 		$player->division = $object->division ? $object->division : $player->division;
-		$player->lps = $object->lps ? $object->lps : $player->lps;
+		$player->lps = $object->lps == null ? $player->lps : $object->lps;
 		$player->comment = $object->comment ? $object->comment : $player->comment;
 
 		return $player;
