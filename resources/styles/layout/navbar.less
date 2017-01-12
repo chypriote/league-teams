@@ -15,6 +15,9 @@
 	background-color: #fff;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
+  .container {
+    display: flex;
+  }
   .nav-item {
   	display: inline-flex;
     a {
@@ -36,6 +39,10 @@
         background: @core-link-color;
         color: @core-light-color;
       }
+    }
+    &.--last {
+      flex-grow: 1;
+      justify-content: flex-end;
     }
   }
 }
