@@ -1,7 +1,10 @@
 <template>
 	<require from="./player-team"></require>
+	<require from="./player-mates"></require>
 
 	<div class="container">
+		<div class="toast toast-success" show.bind="success">${success}</div>
+		<div class="toast toast-danger" show.bind="error">${error}</div>
 		<div class="columns">
 			<div class="column col-12">
 				<div class="card">
@@ -42,6 +45,7 @@
 						</div>
 					</div>
 					<div class="card-meta form-bar">
+						<button class="btn btn-sm" click.delegate="quickRefresh()"><i class="fa fa-refresh"></i></button>
 						<a route-href="route: player-edit; params.bind: {id: player.id}" class="btn btn-sm">
 							<i class="fa fa-pencil"></i>
 						</a>
@@ -50,19 +54,8 @@
 			</div>
 		</div>
 		<div class="columns">
-			<player-team class="column col-4" team.bind="player.team" pid.bind="player.id"></player-team>
-<!-- 			<div class="column col-4">
-				<div class="card">
-					<header>Names</header>
-					<div class="card-body">Test</div>
-				</div>
-			</div>
-			<div class="column col-4">
-				<div class="card">
-					<header>Names</header>
-					<div class="card-body">Test</div>
-				</div>
-			</div> -->
+			<player-team class="column col-5" team.two-way="player.team" pid.bind="player.id"></player-team>
+			<player-mates class="column col-7" teammates.bind="player.team.players" pid.bind="player.id" if.bind="player.team"></player-mates>
 		</div>
 	</div>
 </template>

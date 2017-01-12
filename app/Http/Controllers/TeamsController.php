@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Player;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Team;
@@ -13,10 +14,11 @@ class TeamsController extends Controller
 {
 	public function index()
 	{
-		$teams = Team::all();
+		$teams = Team::orderBy('name', 'asc')->get();
 		foreach ($teams as $team) {
-			$team->load('players');
+			$team->players = Player::where('team_id', $team->id)->orderBy('position', 'asc')->get();
 			foreach ($team['players'] as $player) {
+				$player->position = $player->positionText($player->position);
 				$team[$player['position']] = [ 'name' => $player['name'], 'id' => $player['id']];
 			}
 			unset($team['players']);
@@ -67,5 +69,11 @@ class TeamsController extends Controller
 		if ($team = Team::find($id))
 			return new JsonResponse($team->delete(), 200);
 		return new JsonResponse(null, 404);
+	}
+
+	public function latest($number)
+	{
+		$teams = Team::orderBy('created_at', 'desc')->take($number)->get();
+		return new JsonResponse($teams);
 	}
 }

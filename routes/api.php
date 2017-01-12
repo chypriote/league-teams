@@ -13,14 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+Route::get('user', function (Request $request) {
     return $request->user();
 });
 
 
+Route::get('teams/latest/{number}', 'TeamsController@latest')->name('latest-teams');
+
 Route::resource('teams', 'TeamsController');
 
-Route::resource('players', 'PlayersController');
 
 Route::get('players/validate-id/{id}', 'PlayersController@idCheck')->name('validate-id');
+Route::get('players/teamless', 'PlayersController@teamless')->name('team-less');
+Route::get('players/latest/{number}', 'PlayersController@latest')->name('latest-players');
 Route::post('players/join-team', 'PlayersController@joinTeam')->name('join-team');
+
+Route::resource('players', 'PlayersController');

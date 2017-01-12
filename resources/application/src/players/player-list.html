@@ -3,10 +3,10 @@
 	<div class="card inline header-card">
 		<header class="bold">Nom</header>
 		<div class="card-body">
-			<div class="column col-5 bold">
+			<div class="column col-6 bold">
 				Nom d'invocateur
 			</div>
-			<div class="column col-3 col-centered bold">
+			<div class="column col-2 col-centered bold">
 				Equipe
 			</div>
 			<div class="column col-2 col-centered bold">
@@ -20,10 +20,10 @@
 	<a class="card inline" route-href="route: player; params.bind: {id: player.id}" repeat.for="player of players">
 		<header class="bold">${player.name}</header>
 		<div class="card-body">
-			<div class="column col-5">
+			<div class="column col-6">
 				${player.summoner_name}
 			</div>
-			<div class="column col-3 col-centered">
+			<div class="column col-2 col-centered">
 				<img src="${player.team.image}" show.bind="player.team.logo" class="img-team-logo" title="${player.team.name}">
 			</div>
 			<div class="column col-2 col-centered">

@@ -1,10 +1,50 @@
 import {TeamsAPI} from '../teamsAPI';
+import {RiotAPI} from '../riotAPI';
+import {PlayerUtility} from './player-utility';
 
 export class PlayerDetail {
 	routeConfig;
 	player;
+	success; error;
 
 	constructor() { }
+	
+	quickRefresh() {
+		let vm = this;
+		let riot = new RiotAPI;
+		let api = new TeamsAPI();
+		this.error = null;
+		this.success = null;
+		let updated = {
+			id: vm.player.id,
+			summoner_name: vm.player.summoner_name,
+			tier: undefined,
+			division: undefined,
+			lps: undefined
+		};
+		
+		riot.summonerById(this.player.riot_id).then(
+			function (response: any) {
+				updated.summoner_name = response.name;
+				
+				riot.summonerLeague(vm.player.riot_id).then(
+					function (response) {
+						updated.tier = PlayerUtility.rankToDatabase(response[0].tier);
+						updated.division = PlayerUtility.romanToDecimal(response[0].entries[0].division);
+						updated.lps = response[0].entries[0].leaguePoints;
+						
+						api.updatePlayer(updated)
+							.then(function (response) {
+								Object.assign(vm.player, response);
+								vm.success = 'Joueur mis à jour';
+							}, function (error) {
+								vm.error = '[' + error.response + '] Impossible de sauvegarder le joueur';
+							});
+					}
+				);
+			}
+		);
+	}
 
 	setImages() {
 		this.player.images = {
@@ -18,9 +58,9 @@ export class PlayerDetail {
 
 	activate(params, routeConfig) {
 		this.routeConfig = routeConfig;
-		let client = new TeamsAPI();
+		let api = new TeamsAPI();
 
-		return client.getPlayer(params.id)
+		return api.getPlayer(params.id)
 			.then(data => {
 				this.player = data;
 				this.routeConfig.navModel.setTitle(this.player.name);

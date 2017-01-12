@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
-	const POSITION_TOP = 'top';
-	const POSITION_JUNGLE = 'jungle';
-	const POSITION_MID = 'mid';
-	const POSITION_ADC = 'adc';
-	const POSITION_SUPPORT = 'support';
+	const POSITION_TOP = '10_top';
+	const POSITION_JUNGLE = '20_jungle';
+	const POSITION_MID = '30_mid';
+	const POSITION_ADC = '40_adc';
+	const POSITION_SUPPORT = '50_support';
 
 	const TIER_CHALLENGER = '10_challenger';
 	const TIER_MASTER = '20_master';
@@ -25,22 +25,22 @@ class Player extends Model
 	];
 
 	public function team()
-    {
-        return $this->belongsTo('App\Models\Team');
-    }
+	{
+			return $this->belongsTo('App\Models\Team');
+	}
 
 	public function previousteam()
 	{
 		return $this->belongsToMany('App\Models\Team', 'players_teams')->withPivot('team_id', 'player_id', 'is_current');
 	}
 
-    /**
-     * Returns a formatted tier for the frontend app
-     *
-     * @param $tier
-     * @return null|string
-     */
-    static public function tierText($tier)
+	/**
+	 * Returns a formatted tier for the frontend app
+	 *
+	 * @param $tier
+	 * @return null|string
+	 */
+	static public function tierText($tier)
 	{
 		switch ($tier) {
 			case Player::TIER_CHALLENGER:
@@ -56,79 +56,103 @@ class Player extends Model
 		}
 	}
 
-    /**
-     * Returns the number corresponding to a tier
-     *
-     * @param $tier
-     * @return mixed
-     */
-    static private function tierNumber($tier)
+	/**
+	 * Returns a formatted position for the frontend app
+	 *
+	 * @param $position
+	 * @return null|string
+	 */
+	static public function positionText($position)
 	{
-		return array_search($tier, Player::getAvailableTiers());
-	}
-
-    /**
-     * Returns wether the new rank is higher than the previous one
-     *
-     * @param $old_tier
-     * @param $old_division
-     * @param $new_tier
-     * @param $new_division
-     * @return bool
-     * @throws \Exception
-     */
-    static public function isHigherRank($old_tier, $old_division, $new_tier, $new_division)
-	{
-		if (!in_array($old_tier, Player::getAvailableTiers()) || !in_array($new_tier, Player::getAvailableTiers())) {
-			throw new \Exception('[isHigherRank] invalid tier name');
+		switch ($position) {
+			case Player::POSITION_TOP:
+				return 'top';
+			case Player::POSITION_JUNGLE:
+				return 'jungle';
+			case Player::POSITION_MID:
+				return 'mid';
+			case Player::POSITION_ADC:
+				return 'adc';
+			case Player::POSITION_SUPPORT:
+				return 'support';
+			default:
+				return null;
 		}
-
-		if ($old_tier != $new_tier) {
-			return Player::tierNumber($old_tier) < Player::tierNumber($new_tier);
-		}
-
-		return $old_division < $new_division;
 	}
 
-    /**
-     * Checks validity of a division
-     *
-     * @param $division
-     * @return bool
-     */
-    static public function isValidDivision($division)
-	{
-		return $division > 0 && $division < 6;
+	/**
+	 * Returns the number corresponding to a tier
+	 *
+	 * @param $tier
+	 * @return mixed
+	 */
+	static private function tierNumber($tier)
+{
+	return array_search($tier, Player::getAvailableTiers());
+}
+
+	/**
+	 * Returns wether the new rank is higher than the previous one
+	 *
+	 * @param $old_tier
+	 * @param $old_division
+	 * @param $new_tier
+	 * @param $new_division
+	 * @return bool
+	 * @throws \Exception
+	 */
+	static public function isHigherRank($old_tier, $old_division, $new_tier, $new_division)
+{
+	if (!in_array($old_tier, Player::getAvailableTiers()) || !in_array($new_tier, Player::getAvailableTiers())) {
+		throw new \Exception('[isHigherRank] invalid tier name');
 	}
 
-    /**
-     * Returns existing tiers
-     *
-     * @return array
-     */
-    static public function getAvailableTiers()
-	{
-		return [
-			Player::TIER_CHALLENGER,
-			Player::TIER_MASTER,
-			Player::TIER_DIAMOND,
-			Player::TIER_PLATINUM,
-		];
+	if ($old_tier != $new_tier) {
+		return Player::tierNumber($old_tier) < Player::tierNumber($new_tier);
 	}
 
-    /**
-     * Returns existing positions
-     *
-     * @return array
-     */
-    static public function getAvailablePositions()
-	{
-		return [
-			Player::POSITION_TOP,
-			Player::POSITION_JUNGLE,
-			Player::POSITION_MID,
-			Player::POSITION_ADC,
-			Player::POSITION_SUPPORT,
-		];
-	}
+	return $old_division < $new_division;
+}
+
+	/**
+	 * Checks validity of a division
+	 *
+	 * @param $division
+	 * @return bool
+	 */
+	static public function isValidDivision($division)
+{
+	return $division > 0 && $division < 6;
+}
+
+	/**
+	 * Returns existing tiers
+	 *
+	 * @return array
+	 */
+	static public function getAvailableTiers()
+{
+	return [
+		Player::TIER_CHALLENGER,
+		Player::TIER_MASTER,
+		Player::TIER_DIAMOND,
+		Player::TIER_PLATINUM,
+	];
+}
+
+	/**
+	 * Returns existing positions
+	 *
+	 * @return array
+	 */
+	static public function getAvailablePositions()
+{
+	return [
+		Player::POSITION_TOP,
+		Player::POSITION_JUNGLE,
+		Player::POSITION_MID,
+		Player::POSITION_ADC,
+		Player::POSITION_SUPPORT,
+	];
+}
 }

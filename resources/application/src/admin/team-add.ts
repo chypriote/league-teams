@@ -1,10 +1,22 @@
 import {TeamsAPI} from '../teamsAPI';
 
-
 export class TeamAdd {
 	api = new TeamsAPI;
 	name; logo;	error; success;
+	latest;
 
+	constructor() {
+		let vm = this;
+		this.api.latestTeams(10).then(data => {
+			vm.latest = data;
+			vm.latest.forEach(function (team) {
+				if (team.logo) {
+					team.image = '/assets/teams/32/' + team.logo + '.png';
+				}
+				return team
+			});
+		});
+	}
 
 	submitTeam() {
 		let vm = this;

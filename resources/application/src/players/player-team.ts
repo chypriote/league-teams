@@ -8,11 +8,9 @@ export class PlayerTeam {
 	selectedTeam;
 	edition; available;
 
-	constructor() {
-		this.api.getTeams().then(data => this.available = data);
-	}
-
 	edit() {
+		if (!this.available)
+			this.api.getTeams().then(data => this.available = data);
 		this.edition = !this.edition;
 	}
 

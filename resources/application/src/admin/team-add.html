@@ -1,0 +1,50 @@
+<template>
+	<div class="toast toast-success" show.bind="success">L'équipe a bien été ajoutée.</div>
+	<div class="toast toast-danger" show.bind="error">${error}</div>
+
+	<div class="columns">
+		<div class="column col-8">
+			<div class="card">
+				<header>
+					<h3>Ajouter une équipe</h3>
+				</header>
+				<div class="card-body container">
+					<form submit.delegate="submitTeam()">
+						<fieldset class="form-group col-8">
+							<label class="form-label">Nom</label>
+							<input id="name" value.bind="name" type="text" class="form-input">
+						</fieldset>
+
+						<fieldset class="form-group col-8">
+							<label class="form-label">Logo path</label>
+							<input id="logo" value.bind="logo" type="text" class="form-input">
+						</fieldset>
+
+
+						<div class="form-bar">
+							<button type="submit" class="btn btn-primary">
+								Enregistrer
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="column col-4">
+			<div class="card">
+				<header>Derniers ajouts</header>
+				<div class="card-body">
+					<div class="chip" repeat.for="team of latest">
+						<img src="${team.image}" show.bind="team.logo" class="chip-icon">
+						<div class="chip-content">
+							${team.name}
+						</div>
+						<a href="#" class="chip-action">
+							<i class="fa fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
