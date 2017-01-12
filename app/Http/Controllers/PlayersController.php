@@ -163,7 +163,7 @@ class PlayersController extends Controller
 
 	public function teamless()
 	{
-		$players = Player::whereNull('team_id')->get();
+		$players = Player::whereNull('team_id')->orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
 		foreach ($players as $player) {
 			$player->tier = Player::tierText($player->tier);
 			$player->position = Player::positionText($player->position);

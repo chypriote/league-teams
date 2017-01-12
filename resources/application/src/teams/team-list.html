@@ -11,7 +11,7 @@
 				<span if.bind="!team.top">-</span>
 			</div>
 			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.jungle.id}" if.bind="team.top">${team.jungle.name}</a>
+				<a route-href="route: player; params.bind: {id: team.jungle.id}" if.bind="team.jungle">${team.jungle.name}</a>
 				<span if.bind="!team.jungle">-</span>
 			</div>
 			<div class="column col-centered">
