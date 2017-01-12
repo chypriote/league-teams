@@ -5,7 +5,7 @@ import {PlayerUtility} from './player-utility';
 export class PlayerDetail {
 	routeConfig;
 	player;
-	success; error;
+	success; error; refreshing;
 
 	constructor() { }
 	
@@ -22,6 +22,7 @@ export class PlayerDetail {
 			division: undefined,
 			lps: undefined
 		};
+		this.refreshing = true;
 		
 		riot.summonerById(this.player.riot_id).then(
 			function (response: any) {
@@ -37,8 +38,10 @@ export class PlayerDetail {
 							.then(function (response) {
 								Object.assign(vm.player, response);
 								vm.success = 'Joueur mis à jour';
+								vm.refreshing = null;
 							}, function (error) {
 								vm.error = '[' + error.response + '] Impossible de sauvegarder le joueur';
+								vm.refreshing = null;
 							});
 					}
 				);
