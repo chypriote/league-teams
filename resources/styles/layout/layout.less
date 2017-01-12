@@ -1,21 +1,21 @@
 // Layout
 .container {
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: @layout-gutter;
-	padding-right: @layout-gutter;
-	width: 100%;
-	max-width: 100%;
-	&:extend(.clearfix all);
-	&.main {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		padding-top: 7rem;
-	}
-	@media (min-width: 768px) {width: 750px;}
-	@media (min-width: 992px) {width: 970px;}
-	@media (min-width: 1200px) {width: 1170px;}
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: @layout-gutter;
+  padding-right: @layout-gutter;
+  width: 100%;
+  max-width: 100%;
+  &:extend(.clearfix all);
+  &.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 7rem;
+  }
+  @media (min-width: 768px) {width: 750px;}
+  @media (min-width: 992px) {width: 970px;}
+  @media (min-width: 1200px) {width: 1170px;}
 }
 // Grid sizes
 @media screen and (min-width: (960px + 2 * @html-font-size * @layout-gutter)) {

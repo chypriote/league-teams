@@ -1,0 +1,19 @@
+<template>
+    <nav class="navbar sub-navbar">
+        <div class="nav-item" repeat.for="row of router.navigation">
+            <a href.bind="row.href" class.bind="row.isActive ? 'active' : ''">
+                <span class="icon icon-link"></span> ${row.title}
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="columns">
+
+            <div class="column col-12">
+                <router-view class="subview"></router-view>
+            </div>
+
+        </div>
+    </div>
+</template>

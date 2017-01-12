@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {PlayerAdded} from '../events';
+import {PlayerUtility} from '../players/player-utility';
 import {RiotAPI} from '../riotAPI';
 import {TeamsAPI} from '../teamsAPI';
 
@@ -8,12 +9,30 @@ import {TeamsAPI} from '../teamsAPI';
 export class PlayerAdd {
 	riot = new RiotAPI;
 	api = new TeamsAPI;
-	name;
-	player;
+	name; player;
 	error; success;
+	latest;
 
   constructor(private ea: EventAggregator) {
+	  let vm = this;
+	  this.api.latestPlayers(10).then(function(data) {
+		  vm.latest = data;
+		  vm.latest.forEach(function (player) {
+			  player.images = vm.setImages(player);
+			  if (player.team && player.team.logo) {
+				  player.team.image = '/assets/teams/32/' + player.team.logo + '.png';
+			  }
+			  return player
+		  });
+	  });
   }
+  
+	setImages(player) {
+		return {
+			rank: '/assets/tiers/32/' + player.tier.toLowerCase() + '.png',
+			role: '/assets/roles/32/' + player.position + '.png',
+		}
+	}
 
 	findPlayer() {
 		let vm = this;
@@ -40,47 +59,15 @@ export class PlayerAdd {
 		this.player.set = false;
 	}
 
-	rankToDatabase(rank: string) {
-		switch (rank) {
-			case 'CHALLENGER':
-				return '10_challenger';
-			case 'MASTER':
-				return '20_master';
-			case 'DIAMOND':
-				return '30_diamond';
-			case 'PLATINUM':
-				return '40_platinum';
-			default:
-				return null;
-		}
-	}
-
-	romanToDecimal(roman: string) {
-		switch (roman) {
-			case "I":
-				return 1;
-			case "II":
-				return 2;
-			case "III":
-				return 3;
-			case "IV":
-				return 4;
-			case "V":
-				return 5;
-			default:
-				return 0;
-		}
-	}
-
 	submitPlayer() {
 		let vm = this;
 		let player = {
 			name: this.player.real_name ? this.player.real_name : this.player.name,
 			summoner_name: this.player.name,
 			riot_id: this.player.id,
-			position: this.player.position,
-			tier: this.rankToDatabase(this.player.leagues[0].tier),
-			division: this.romanToDecimal(this.player.leagues[0].entries[0].division),
+			position: PlayerUtility.positionToDatabase(this.player.position),
+			tier: PlayerUtility.rankToDatabase(this.player.leagues[0].tier),
+			division: PlayerUtility.romanToDecimal(this.player.leagues[0].entries[0].division),
 			lps: this.player.leagues[0].entries[0].leaguePoints,
 		};
 

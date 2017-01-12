@@ -1,0 +1,113 @@
+<template>
+	<div class="columns">
+
+		<div class="toast toast-success" show.bind="success">Le joueur a bien été enregistré.</div>
+		<div class="toast toast-danger" show.bind="error">${error}</div>
+
+		<div class="column col-8">
+			<div class="card">
+				<header>
+					<h3>Rechercher un joueur</h3>
+				</header>
+				<div class="card-body container">
+					<form submit.delegate="findPlayer()">
+						<fieldset class="form-group col-6">
+							<label class="form-label">Nom</label>
+							<input id="name" value.bind="name" type="text" class="form-input" disabled.bind="player.set">
+						</fieldset>
+
+						<div class="form-bar">
+							<button type="submit" class="btn btn-primary" show.bind="!player.set">
+								Rechercher
+							</button>
+							<button type="button" class="btn" show.bind="player.set" click.trigger="editPlayer()">
+								Modifier
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="card" show.bind="player.set">
+				<header>
+					<h3>Ajout de ${player.name}</h3>
+				</header>
+				<div class="card-body container">
+					<form submit.delegate="submitPlayer()">
+
+						<fieldset class="form-group col-6">
+							<label for="riot_id" class="form-label">Riot ID</label>
+							<input id="riot_id" value.bind="player.id" type="text" class="form-input" disabled>
+						</fieldset>
+
+						<fieldset class="form-group col-6">
+							<label for="real_name" class="form-label">Nom</label>
+							<input id="real_name" value.bind="player.real_name" type="text" class="form-input">
+						</fieldset>
+
+						<fieldset class="form-group col-8">
+							<label for="position" class="form-label">Position</label>
+							<div class="btn-group">
+								<button
+									click.trigger="player.position = 'top'"
+									class="btn"
+									class.bind="player.position === 'top' ? 'active' : ''"
+								>Top</button>
+								<button
+									click.trigger="player.position = 'jungle'"
+									class="btn"
+									class.bind="player.position === 'jungle' ? 'active' : ''"
+								>Jungle</button>
+								<button
+									click.trigger="player.position = 'mid'"
+									class="btn"
+									class.bind="player.position === 'mid' ? 'active' : ''"
+								>Mid</button>
+								<button
+									click.trigger="player.position = 'adc'"
+									class="btn"
+									class.bind="player.position === 'adc' ? 'active' : ''"
+								>ADC</button>
+								<button
+									click.trigger="player.position = 'support'"
+									class="btn"
+									class.bind="player.position === 'support' ? 'active' : ''"
+								>Support</button>
+							</div>
+						</fieldset>
+
+						<fieldset class="form-group col-12">
+							<label for="leagues" class="form-label">Leagues</label>
+							<div class="card inline" repeat.for="league of player.leagues">
+								<header>${league.queue}</header>
+								<div class="card-body">${league.tier} ${league.entries[0].division} ${league.entries[0].leaguePoints} LP</div>
+							</div>
+						</fieldset>
+
+						<div class="form-bar">
+							<button type="submit" class="btn btn-primary" disabled.bind="!player.position">
+								Enregistrer
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="column col-4">
+			<div class="card">
+				<header>Derniers ajouts</header>
+				<div class="card-body">
+					<a route-href="route: player; params.bind: {id: player.id}"  class="chip --hoverable" repeat.for="player of latest">
+						<img src="${player.images.rank}" class="chip-icon">
+						<img src="${player.team.image}" show.bind="player.team.logo" class="chip-icon">
+						<div class="chip-content">${player.name}</div>
+						<div class="chip-action">
+							<i class="fa fa-arrow-right"></i>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</template>

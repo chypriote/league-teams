@@ -27,6 +27,7 @@ class PlayersController extends Controller
 		foreach ($players as $player) {
 			$player->team;
 			$player->tier = Player::tierText($player->tier);
+			$player->position = Player::positionText($player->position);
 		}
 		return new JsonResponse($players);
 	}
@@ -40,8 +41,15 @@ class PlayersController extends Controller
 		$player = Player::find($id);
 
 		if ($player) {
-			$player->team;
+			if ($player->team) {
+				$player->team->players = Player::where('team_id', $player->team->id)->orderBy('position', 'asc')->get();
+				foreach ($player->team->players as $mate) {
+					$mate->tier = Player::tierText($mate->tier);
+					$mate->position = Player::positionText($mate->position);
+				}
+			}
 			$player->tier = Player::tierText($player->tier);
+			$player->position = Player::positionText($player->position);
 			return new JsonResponse($player);
 		}
 		return new JsonResponse(null);
@@ -108,6 +116,8 @@ class PlayersController extends Controller
 			return new JsonResponse($e->getMessage(), 400);
 		}
 
+		$player->tier = Player::tierText($player->tier);
+		$player->position = Player::positionText($player->position);
 		return new JsonResponse($player, 201);
 	}
 
@@ -130,8 +140,14 @@ class PlayersController extends Controller
 		if (!($team = Team::find($request->team_id)))
 			return new JsonResponse('Team not found', 400);
 
-		if ($team->players()->save($player))
+		if ($team->players()->save($player)) {
+			$team->players = Player::where('team_id', $team->id)->orderBy('position', 'asc')->get();
+			foreach ($team->players as $mate) {
+				$mate->tier = Player::tierText($mate->tier);
+				$mate->position = Player::positionText($mate->position);
+			}
 			return new JsonResponse($team, 200);
+		}
 
 		return new JsonResponse('An error has occured', 400);
 	}
@@ -143,5 +159,26 @@ class PlayersController extends Controller
 			return new JsonResponse(['error' => "player already exists"], 400);
 		}
 		return new JsonResponse(null, 201);
+	}
+
+	public function teamless()
+	{
+		$players = Player::whereNull('team_id')->get();
+		foreach ($players as $player) {
+			$player->tier = Player::tierText($player->tier);
+			$player->position = Player::positionText($player->position);
+		}
+		return new JsonResponse($players);
+	}
+
+	public function latest($number)
+	{
+		$players = Player::orderBy('created_at', 'desc')->take($number)->get();
+		foreach ($players as $player) {
+			$player->team;
+			$player->tier = Player::tierText($player->tier);
+			$player->position = Player::positionText($player->position);
+		}
+		return new JsonResponse($players);
 	}
 }

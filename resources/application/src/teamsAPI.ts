@@ -16,6 +16,15 @@ export class TeamsAPI {
 		return promise;
 	}
 
+	getTeamLessPlayers() {
+		let vm = this;
+		let promise = new Promise(function (resolve, reject) {
+			vm.client.get('/api/players/teamless')
+                .then(response => resolve(JSON.parse(response.response)));
+		});
+		return promise;
+	}
+
 	getPlayer(id) {
 		let vm = this;
 		let promise = new Promise(function (resolve, reject) {
@@ -84,6 +93,28 @@ export class TeamsAPI {
 					.then(response => resolve(JSON.parse(response.response)))
 					.catch(error => reject(error.response));
 			});
+		return promise;
+	}
+
+    latestTeams(number: number) {
+			let vm = this;
+	
+			let promise = new Promise(function (resolve, reject) {
+				vm.client.get('/api/teams/latest/' + number)
+	                .then(response => resolve(JSON.parse(response.response)))
+	                .catch(error => reject(error.response));
+			});
+			return promise;
+    }
+	
+	latestPlayers(number: number) {
+		let vm = this;
+		
+		let promise = new Promise(function (resolve, reject) {
+			vm.client.get('/api/players/latest/' + number)
+				.then(response => resolve(JSON.parse(response.response)))
+				.catch(error => reject(error.response));
+		});
 		return promise;
 	}
 }

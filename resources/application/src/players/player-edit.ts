@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {TeamsAPI} from '../teamsAPI';
 import {RiotAPI} from '../riotAPI';
+import {PlayerUtility} from './player-utility';
 
 
 @inject(Router)
@@ -42,48 +43,16 @@ export class PlayerEdit {
 			}
 		);
 	}
-
-	romanToDecimal(roman: string) {
-		switch (roman) {
-			case "I":
-				return 1;
-			case "II":
-				return 2;
-			case "III":
-				return 3;
-			case "IV":
-				return 4;
-			case "V":
-				return 5;
-			default:
-				return 0;
-		}
-	}
-
-	rankToDatabase(rank: string) {
-		switch (rank) {
-			case 'CHALLENGER':
-				return '10_challenger';
-			case 'MASTER':
-				return '20_master';
-			case 'DIAMOND':
-				return '30_diamond';
-			case 'PLATINUM':
-				return '40_platinum';
-			default:
-				return null;
-		}
-	}
-
+	
 	editPlayer() {
 		let vm = this;
 		let player = {
 			id: this.player.id,
 			name: this.player.name ? this.player.name : this.player.summoner_name,
 			summoner_name: this.player.summoner_name,
-			position: this.player.position,
-			tier: this.player.leagues ? this.rankToDatabase(this.player.leagues[0].tier) : null,
-			division: this.player.leagues ? this.romanToDecimal(this.player.leagues[0].entries[0].division) : null,
+			position: PlayerUtility.positionToDatabase(this.player.position),
+			tier: this.player.leagues ? PlayerUtility.rankToDatabase(this.player.leagues[0].tier) : null,
+			division: this.player.leagues ? PlayerUtility.romanToDecimal(this.player.leagues[0].entries[0].division) : null,
 			lps: this.player.leagues ? this.player.leagues[0].entries[0].leaguePoints : null,
 			comment: this.player.comment
 		};

@@ -1,6 +1,5 @@
 import * as gulp from 'gulp';
 import * as browserSync from 'browser-sync';
-import * as historyApiFallback from 'connect-history-api-fallback/lib';
 import * as project from '../aurelia.json';
 import build from './build';
 import {CLIOptions} from 'aurelia-cli';
@@ -20,15 +19,7 @@ let serve = gulp.series(
     browserSync({
       online: false,
       open: false,
-      proxy: 'players.local',
-      // logLevel: 'silent',
-      // server: {
-      //   baseDir: ['.'],
-      //   middleware: [historyApiFallback(), function(req, res, next) {
-      //     res.setHeader('Access-Control-Allow-Origin', '*');
-      //     next();
-      //   }]
-      // }
+      proxy: 'players.local'
     }, function (err, bs) {
       let urls = bs.options.get('urls').toJS();
       console.log(`Application Available At: ${urls.local}`);
@@ -47,7 +38,7 @@ let watch = function() {
   gulp.watch(project.transpiler.source, refresh).on('change', onChange);
   gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
   gulp.watch(project.cssProcessor.source, refresh).on('change', onChange);
-}
+};
 
 let run;
 
