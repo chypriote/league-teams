@@ -12,42 +12,36 @@ export class RiotAPI {
 	summonerById(id: number) {
 		let vm = this;
 		let url = this.api_url + 'v1.4/summoner/' + id +'?api_key=' + this.api_key;
-		let promise = new Promise(function (resolve, reject) {
-				vm.client.fetch(url)
-					.then(response => response.json())
-					.then(function (data) {
-						resolve(data[id]);
-					})
-					.catch(error => reject(error));
-			});
-		return promise;
+		return new Promise(function (resolve, reject) {
+			vm.client.fetch(url)
+				.then(response => response.json())
+				.then(function (data) {
+					resolve(data[id]);
+				}, error => reject(error));
+		});
 	}
 
 	summonerByName(name: string) {
 		let vm = this;
 		let url = this.api_url + 'v1.4/summoner/by-name/' + name +'?api_key=' + this.api_key;
-		let promise = new Promise(function (resolve, reject) {
-				vm.client.fetch(url)
-					.then(response => response.json())
-					.then(function (data) {
-						resolve(data[name.toLowerCase().replace(/ /g, '')]);
-					})
-					.catch(error => reject(error));
-			});
-		return promise;
+		return new Promise(function (resolve, reject) {
+			vm.client.fetch(url)
+				.then(response => response.json())
+				.then(function (data) {
+					resolve(data[name.toLowerCase().replace(/ /g, '')]);
+				}, error => reject(error));
+		});
 	}
 
 	summonerLeague(id: number) {
 		let vm = this;
 		let url = this.api_url + 'v2.5/league/by-summoner/' + id + '/entry?api_key=' + this.api_key;
-		let promise = new Promise(function (resolve, reject) {
-				vm.client.fetch(url)
-					.then(response => response.json())
-					.then(function (data) {
-						resolve(data[id]);
-					});
-			});
-
-		return promise;
+		return new Promise(function (resolve, reject) {
+			vm.client.fetch(url)
+				.then(response => response.json())
+				.then(function (data) {
+					resolve(data[id]);
+				}, error => reject(error));
+		});
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Error;
 use App\Managers\PlayerManager;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -73,7 +74,7 @@ class PlayersController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return new JsonResponse($validator->errors(), 422);
+			return new JsonResponse(new Error('validation', $validator->errors()), 422);
 		}
 
 		try {
@@ -81,9 +82,11 @@ class PlayersController extends Controller
 			$player->riot_id = $request->riot_id;
 			$player->save();
 		} catch (\Exception $e) {
+
 			if ($e->getCode() == 23000)
-				return new JsonResponse('Player already exists', 400);
-			return new JsonResponse($e->getMessage(), 400);
+				return new JsonResponse(new Error('exists', 'Le joueur existe déjà'), 400);
+
+			return new JsonResponse(new Error('unknown', 'Une erreur inconnue s\'est produite'), 400);
 		}
 
 		$player->tier = Player::tierText($player->tier);
@@ -103,7 +106,7 @@ class PlayersController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return new JsonResponse($validator->errors(), 422);
+			return new JsonResponse(new Error('validation', $validator->errors()), 422);
 		}
 
 
@@ -113,9 +116,7 @@ class PlayersController extends Controller
 
 			$player->save();
 		} catch (\Exception $e) {
-			if ($e->getCode() == 23000)
-				return new JsonResponse('Player already exists', 400);
-			return new JsonResponse($e->getMessage(), 400);
+			return new JsonResponse(new Error('unknown', 'Une erreur inconnue s\'est produite'), 400);
 		}
 
 		$player->tier = Player::tierText($player->tier);
@@ -137,10 +138,10 @@ class PlayersController extends Controller
 	public function joinTeam(Request $request)
 	{
 		if (!($player = Player::find($request->player_id)))
-			return new JsonResponse('Player not found', 400);
+			return new JsonResponse(new Error('not_found', 'Le joueur n\'a pas été trouvé'), 400);
 
 		if (!($team = Team::find($request->team_id)))
-			return new JsonResponse('Team not found', 400);
+			return new JsonResponse(new Error('not_found', 'L\'équipe n\'a pas été trouvée'), 400);
 
 		if ($team->players()->save($player)) {
 			$team->players = Player::where('team_id', $team->id)->orderBy('position', 'asc')->get();
@@ -151,21 +152,22 @@ class PlayersController extends Controller
 			return new JsonResponse($team, 200);
 		}
 
-		return new JsonResponse('An error has occured', 400);
+		return new JsonResponse(new Error('unknown', 'Une erreur inconnue s\'est produite'), 400);
 	}
 
-	public function idCheck($id)
+	public function idCheck(Request $request)
 	{
-		$player = Player::where('riot_id', $id)->get();
+		$player = Player::where('riot_id', $request->id)->first();
+
 		if ($player) {
-			return new JsonResponse(['error' => "player already exists"], 400);
+			return new JsonResponse(new Error('exists', 'Le joueur existe déjà'), 400);
 		}
 		return new JsonResponse(null, 201);
 	}
 
 	public function teamless()
 	{
-		$players = Player::whereNull('team_id')->orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		$players = Player::where('team_id', 0)->orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
 		foreach ($players as $player) {
 			$player->tier = Player::tierText($player->tier);
 			$player->position = Player::positionText($player->position);

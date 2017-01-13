@@ -4,7 +4,7 @@
 	<div class="columns">
 
 		<div class="toast toast-success" show.bind="success">Le joueur a bien été enregistré.</div>
-		<div class="toast toast-danger" show.bind="error">${error}</div>
+		<div class="toast toast-danger" show.bind="error">${error.message}</div>
 
 		<div class="column col-8">
 			<div class="card">
@@ -14,15 +14,15 @@
 				<div class="card-body container">
 					<form submit.delegate="findPlayer()">
 						<fieldset class="form-group col-6">
-							<label class="form-label">Nom</label>
+							<label for="name" class="form-label">Nom</label>
 							<input id="name" value.bind="name" type="text" class="form-input" disabled.bind="player.set">
 						</fieldset>
 
 						<div class="form-bar">
-							<button type="submit" class="btn btn-primary" show.bind="!player.set">
+							<button type="submit" class="btn btn-primary" show.bind="!player.set" class.bind="loading ?'loading':''" >
 								Rechercher
 							</button>
-							<button type="button" class="btn" show.bind="player.set" click.trigger="editPlayer()">
+							<button type="button" class="btn" show.bind="player.set" click.trigger="player.set = false">
 								Modifier
 							</button>
 						</div>

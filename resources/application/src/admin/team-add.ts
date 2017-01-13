@@ -28,6 +28,7 @@ export class TeamAdd {
 			.then(function () {
 				vm.name = null;
 				vm.logo = null;
+				vm.tag = null;
 				vm.success = true;
 				vm.ea.publish(new TeamAdded(team));
 			}, function (error) {

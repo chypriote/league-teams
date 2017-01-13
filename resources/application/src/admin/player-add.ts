@@ -10,7 +10,7 @@ export class PlayerAdd {
 	riot = new RiotAPI;
 	api = new TeamsAPI;
 	name; player;
-	error; success;
+	error; success; loading;
 	
 	constructor(private ea: EventAggregator) {}
 	
@@ -19,20 +19,30 @@ export class PlayerAdd {
 
 		this.success = false;
 		this.error = false;
+		this.loading = true;
+		
 		this.riot.summonerByName(this.name).then(
-			function (response) {
+			response => {
 				vm.player = response;
-				vm.player.set = true;
-
-				vm.riot.summonerLeague(vm.player.id).then(
-					function (response) {
-						vm.player.leagues = response;
-					}
-				);
-			}, function (error) {
-				vm.error = '[' + error + '] Impossible de récupérer les informations du joueur';
-			}
-		);
+				
+				if (vm.player.id) {
+					vm.api.checkPlayer(vm.player.id).then(
+						function () {
+							vm.loading = false;
+							vm.riot.summonerLeague(vm.player.id).then(
+								response => {vm.player.leagues = response; vm.player.set = true;},
+								error => vm.error = {message: 'Impossible de récupérer les leagues du joueur'}
+							);
+						},
+						error => {vm.error = error; vm.loading = false;}
+					);
+					
+				} else {
+					vm.loading = false;
+					vm.error = {message: 'Impossible de récupérer les informations du joueur.'};
+				}
+				
+			}, error => vm.error = error);
 	}
 
 	editPlayer() {
@@ -61,7 +71,10 @@ export class PlayerAdd {
 				vm.success = true;
 				vm.ea.publish(new PlayerAdded(response));
 			}, function (error) {
-				vm.error = '[' + error.response + '] Impossible de sauvegarder le joueur';
+				if (error.message && error.message.tier)
+					vm.error = {message:'Tier invalide (minimum: Gold)'};
+				else
+					vm.error = error;
 			});
 	}
 }
