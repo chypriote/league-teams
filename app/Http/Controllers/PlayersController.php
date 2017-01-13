@@ -86,6 +86,8 @@ class PlayersController extends Controller
 			return new JsonResponse($e->getMessage(), 400);
 		}
 
+		$player->tier = Player::tierText($player->tier);
+		$player->position = Player::positionText($player->position);
 		return new JsonResponse($player, 201);
 	}
 

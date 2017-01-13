@@ -15,7 +15,7 @@ class Team extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name',
+		'name', 'tag'
 	];
 
 	public function players()

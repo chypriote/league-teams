@@ -1,8 +1,8 @@
-import {TeamsAPI} from '../teamsAPI';
-import {RiotAPI} from '../riotAPI';
-import {PlayerUtility} from './player-utility';
+import {TeamsAPI} from '../utility/teamsAPI';
+import {RiotAPI} from '../utility/riotAPI';
+import {PlayerUtility} from '../utility/player-utility';
 
-export class PlayerDetail {
+export class Player {
 	routeConfig;
 	player;
 	success; error; refreshing;

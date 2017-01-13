@@ -1,4 +1,4 @@
-import {TeamsAPI} from '../teamsAPI';
+import {TeamsAPI} from '../utility/teamsAPI';
 
 export class PlayerNoTeam {
     api = new TeamsAPI();

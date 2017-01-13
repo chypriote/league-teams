@@ -1,0 +1,17 @@
+<template>
+	<div class="card">
+		<header>Derniers ajouts</header>
+		<div class="card-body">
+			<div class="chip" repeat.for="team of latest">
+				<img src="${team.image}" show.bind="team.logo" class="chip-icon">
+				<span show.bind="!team.logo" class="chip-icon team-logo">FLX</span>
+				<div class="chip-content">
+					${team.name}
+				</div>
+				<a href="#" class="chip-action">
+					<i class="fa fa-arrow-right"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</template>

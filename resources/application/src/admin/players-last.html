@@ -1,0 +1,15 @@
+<template>
+	<div class="card">
+		<header>Derniers ajouts</header>
+		<div class="card-body">
+			<a route-href="route: player; params.bind: {id: player.id}"  class="chip --hoverable" repeat.for="player of latest">
+				<img src="${player.images.rank}" class="chip-icon">
+				<img src="${player.team.image}" show.bind="player.team.logo" class="chip-icon">
+				<div class="chip-content">${player.name}</div>
+				<div class="chip-action">
+					<i class="fa fa-arrow-right"></i>
+				</div>
+			</a>
+		</div>
+	</div>
+</template>

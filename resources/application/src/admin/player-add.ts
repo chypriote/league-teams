@@ -1,9 +1,9 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {PlayerAdded} from '../events';
-import {PlayerUtility} from '../players/player-utility';
-import {RiotAPI} from '../riotAPI';
-import {TeamsAPI} from '../teamsAPI';
+import {PlayerUtility} from '../utility/player-utility';
+import {RiotAPI} from '../utility/riotAPI';
+import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayerAdded} from "../utility/events";
 
 @inject(EventAggregator)
 export class PlayerAdd {
@@ -11,29 +11,9 @@ export class PlayerAdd {
 	api = new TeamsAPI;
 	name; player;
 	error; success;
-	latest;
-
-  constructor(private ea: EventAggregator) {
-	  let vm = this;
-	  this.api.latestPlayers(10).then(function(data) {
-		  vm.latest = data;
-		  vm.latest.forEach(function (player) {
-			  player.images = vm.setImages(player);
-			  if (player.team && player.team.logo) {
-				  player.team.image = '/assets/teams/32/' + player.team.logo + '.png';
-			  }
-			  return player
-		  });
-	  });
-  }
-  
-	setImages(player) {
-		return {
-			rank: '/assets/tiers/32/' + player.tier.toLowerCase() + '.png',
-			role: '/assets/roles/32/' + player.position + '.png',
-		}
-	}
-
+	
+	constructor(private ea: EventAggregator) {}
+	
 	findPlayer() {
 		let vm = this;
 
@@ -76,10 +56,10 @@ export class PlayerAdd {
 
 		this.api.addPlayer(player)
 			.then(function (response) {
-				vm.ea.publish(new PlayerAdded(response));
 				vm.name = null;
 				vm.player = null;
 				vm.success = true;
+				vm.ea.publish(new PlayerAdded(response));
 			}, function (error) {
 				vm.error = '[' + error.response + '] Impossible de sauvegarder le joueur';
 			});

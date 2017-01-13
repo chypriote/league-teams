@@ -1,22 +1,15 @@
-import {TeamsAPI} from '../teamsAPI';
+import {inject} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {TeamsAPI} from '../utility/teamsAPI';
+import {TeamAdded} from "../utility/events";
 
+@inject(EventAggregator)
 export class TeamAdd {
 	api = new TeamsAPI;
-	name; logo;	error; success;
-	latest;
-
-	constructor() {
-		let vm = this;
-		this.api.latestTeams(10).then(data => {
-			vm.latest = data;
-			vm.latest.forEach(function (team) {
-				if (team.logo) {
-					team.image = '/assets/teams/32/' + team.logo + '.png';
-				}
-				return team
-			});
-		});
-	}
+	name; tag; logo;
+	error; success;
+	
+	constructor(private ea: EventAggregator) {}
 
 	submitTeam() {
 		let vm = this;
@@ -26,6 +19,7 @@ export class TeamAdd {
 
 		let team = {
 			name: this.name,
+			tag: this.tag,
 			logo: this.logo
 		};
 
@@ -34,6 +28,7 @@ export class TeamAdd {
 				vm.name = null;
 				vm.logo = null;
 				vm.success = true;
+				vm.ea.publish(new TeamAdded(team));
 			}, function (error) {
 				vm.error = '[' + error.response + '] Impossible de sauvegarder l\'équipe';
 			});

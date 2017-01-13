@@ -1,3 +1,39 @@
 <template>
-    Hello
+    <require from="./players-last"></require>
+    <require from="./teams-last"></require>
+
+    <div class="columns">
+
+        <div class="toast toast-success" show.bind="success">Le joueur a bien été enregistré.</div>
+        <div class="toast toast-danger" show.bind="error">${error}</div>
+
+        <div class="column col-4">
+            <div class="card">
+                <header>
+                    <h3>Mettre à jour</h3>
+                </header>
+                <div class="card-body container">
+                    <form submit.delegate="findPlayer()">
+                        <fieldset class="form-group col-6">
+                            <label class="form-label">Nom</label>
+                            <input id="name" value.bind="name" type="text" class="form-input" disabled.bind="player.set">
+                        </fieldset>
+
+                        <div class="form-bar">
+                            <button type="submit" class="btn btn-primary" show.bind="!player.set">
+                                Rechercher
+                            </button>
+                            <button type="button" class="btn" show.bind="player.set" click.trigger="editPlayer()">
+                                Modifier
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <players-last class="column col-4"></players-last>
+        <teams-last class="column col-4"></teams-last>
+
+    </div>
 </template>

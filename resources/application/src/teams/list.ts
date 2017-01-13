@@ -1,6 +1,6 @@
-import {TeamsAPI} from '../teamsAPI';
+import {TeamsAPI} from '../utility/teamsAPI';
 
-export class TeamList {
+export class List {
 	teams;
 
 	constructor() {}
