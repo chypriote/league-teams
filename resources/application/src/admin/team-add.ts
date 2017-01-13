@@ -20,7 +20,8 @@ export class TeamAdd {
 		let team = {
 			name: this.name,
 			tag: this.tag,
-			logo: this.logo
+			logo: this.logo,
+			image: '/assets/teams/32/' + this.logo + '.png'
 		};
 
 		this.api.addTeam(team)

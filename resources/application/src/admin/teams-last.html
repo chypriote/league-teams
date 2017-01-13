@@ -4,7 +4,7 @@
 		<div class="card-body">
 			<a route-href="route: team-edit; params.bind: {id: team.id}" class="chip --hoverable" repeat.for="team of latest">
 				<img src="${team.image}" show.bind="team.logo" class="chip-icon">
-				<span show.bind="!team.logo" class="chip-icon team-logo">FLX</span>
+				<span show.bind="!team.logo" class="chip-icon team-logo">${team.tag}</span>
 				<div class="chip-content">
 					${team.name}
 				</div>

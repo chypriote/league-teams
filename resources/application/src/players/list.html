@@ -25,7 +25,7 @@
 			</div>
 			<div class="column col-2 col-centered">
 				<img src="${player.team.image}" show.bind="player.team.logo" class="img-team-logo" title="${player.team.name}">
-				<span show.bind="!player.team.logo" class="chip-icon team-logo" title="${player.team.name}">FLX</span>
+				<span show.bind="player.team && !player.team.logo" class="chip-icon team-logo" title="${player.team.name}">${player.team.tag}</span>
 			</div>
 			<div class="column col-2 col-centered">
 				<img src="${player.images.role}" alt="${player.position}" title="${player.position}">

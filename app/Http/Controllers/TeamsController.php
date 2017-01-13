@@ -48,6 +48,7 @@ class TeamsController extends Controller
 			$team = new Team();
 
 			$team->name = $request->name;
+			$team->tag = $request->tag;
 			$team->logo = $request->logo;
 
 			$team->save();
