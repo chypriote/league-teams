@@ -1,0 +1,61 @@
+<template>
+	<div class="columns">
+
+		<div class="toast toast-success" show.bind="success">L'équipe a bien été enregistrée.</div>
+		<div class="toast toast-danger" show.bind="error">${error}</div>
+
+		<div class="column col-4">
+			<div class="card">
+				<header>
+					<h3>Equipes</h3>
+				</header>
+				<div class="card-body">
+					<a route-href="route: team-edit; params.bind: {id: team.id}" class="chip --hoverable" repeat.for="team of teams">
+						<img src="${team.image}" show.bind="team.logo" class="chip-icon">
+						<span show.bind="!team.logo" class="chip-icon team-logo">${team.tag}</span>
+						<div class="chip-content">
+							${team.name}
+						</div>
+						<div class="chip-action">
+							<i class="fa fa-arrow-right"></i>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="column col-8">
+			<div class="card fixed col-7">
+				<header>
+					<h3>Edition ${team.name}</h3>
+				</header>
+				<div class="card-body container">
+					<form submit.delegate="editTeam()">
+						<fieldset class="form-group col-8">
+							<label class="form-label">Nom</label>
+							<input id="name" value.bind="current.name" type="text" class="form-input">
+						</fieldset>
+
+						<fieldset class="form-group col-3">
+							<label class="form-label">Tag</label>
+							<input id="tag" value.bind="current.tag" type="text" class="form-input">
+						</fieldset>
+
+						<fieldset class="form-group col-8">
+							<label class="form-label">Logo path</label>
+							<input id="logo" value.bind="current.logo" type="text" class="form-input">
+						</fieldset>
+
+
+						<div class="form-bar">
+							<button type="submit" class="btn btn-primary">
+								Enregistrer
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</template>

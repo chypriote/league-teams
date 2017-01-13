@@ -36,7 +36,8 @@ class TeamsController extends Controller
 	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-        'name' => 'required',
+			'name' => 'required',
+			'tag' => 'required'
     ]);
 
     if ($validator->fails()) {
@@ -59,9 +60,30 @@ class TeamsController extends Controller
 		return new JsonResponse($team, 201);
 	}
 
-	public function update($id)
+	public function update(Request $request)
 	{
+		$validator = Validator::make($request->all(), [
+			'name' => 'required',
+			'tag' => 'required'
+		]);
 
+		if ($validator->fails()) {
+			return new JsonResponse($validator->errors(), 422);
+		}
+
+		try {
+			$team = Team::findOrFail($request->id);
+
+			$team->name = $request->name;
+			$team->tag = $request->tag;
+			$team->logo = $request->logo;
+
+			$team->save();
+		} catch (\Exception $e) {
+			return new JsonResponse($e->getMessage(), 400);
+		}
+
+		return new JsonResponse($team, 201);
 	}
 
 	public function destroy($id)
