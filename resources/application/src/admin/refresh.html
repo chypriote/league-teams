@@ -1,0 +1,19 @@
+<template>
+	<div class="card equalizer">
+		<header>
+			<h3>Mettre à jour</h3>
+		</header>
+		<div class="card-body container">
+			<form submit.delegate="refresh()" class="text-centered">
+				<div class="updater">
+					<div class="chip" repeat.for="player of players" if.bind="player.updating">
+						Mise à jour de ${player.name}... <span show.bind="played.updated">OK</span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary" class.bind="loading ?'loading':''">
+					Rafraichir
+				</button>
+			</form>
+		</div>
+	</div>
+</template>
