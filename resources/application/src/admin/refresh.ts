@@ -6,7 +6,7 @@ export class Refresh {
 	api = new TeamsAPI();
 	riot = new RiotAPI();
 	players;
-	loading;
+	loading; handled;
 	
 	
 	refresh() {
@@ -20,6 +20,7 @@ export class Refresh {
 				setTimeout(function () {
 					let player = vm.players[i];
 					player.updating = true;
+					vm.handled = vm.players.length - i;
 					vm.riot.summonerLeague(player.riot_id).then(response => {
 						player.leagues = response;
 						player.position = PlayerUtility.positionToDatabase(player.position);

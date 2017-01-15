@@ -7,12 +7,15 @@
 			<form submit.delegate="refresh()" class="text-centered">
 				<div class="updater">
 					<div class="chip" repeat.for="player of players" if.bind="player.updating">
-						Mise à jour de ${player.name}... <span show.bind="played.updated">OK</span>
+						Mise à jour de ${player.name}... OK !
 					</div>
 				</div>
-				<button type="submit" class="btn btn-primary" class.bind="loading ?'loading':''">
-					Rafraichir
-				</button>
+				<div class="--spaced" class.bind="loading?'form-bar':''">
+					<span show.bind="loading">${handled} / ${players.length}</span>
+					<button type="submit" class="btn btn-primary" class.bind="loading ?'loading':''">
+						Rafraichir
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>
