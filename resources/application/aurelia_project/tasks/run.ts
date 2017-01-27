@@ -19,7 +19,7 @@ let serve = gulp.series(
     browserSync({
       online: false,
       open: false,
-      proxy: 'players.local'
+      proxy: 'localhost:3000'
     }, function (err, bs) {
       let urls = bs.options.get('urls').toJS();
       console.log(`Application Available At: ${urls.local}`);

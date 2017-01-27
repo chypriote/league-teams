@@ -43,7 +43,7 @@ export class Edit {
 			}
 		);
 	}
-	
+
 	editPlayer() {
 		let vm = this;
 		let player = {

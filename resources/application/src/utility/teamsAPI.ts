@@ -70,7 +70,7 @@ export class TeamsAPI {
 				.catch(error => reject(error.response));
 		});
 	}
-	
+
 	getTeams() {
 		let vm = this;
 		return new Promise(function (resolve, reject) {
@@ -99,6 +99,14 @@ export class TeamsAPI {
 		let vm = this;
 		return new Promise(function (resolve, reject) {
 			vm.client.put('/api/teams/' + team.id, team)
+				.then(response => resolve(JSON.parse(response.response)))
+				.catch(error => reject(error.response));
+		});
+	}
+	deleteTeam(id) {
+		let vm = this;
+		return new Promise(function (resolve, reject) {
+			vm.client.delete('/api/teams/' + id)
 				.then(response => resolve(JSON.parse(response.response)))
 				.catch(error => reject(error.response));
 		});

@@ -14,6 +14,15 @@ export class PlayerTeam {
 		this.edition = !this.edition;
 	}
 
+	removeTeam() {
+		let vm = this;
+		this.api.addTeamToPlayer(vm.pid, 0).then(
+			function(data) {
+				vm.team = null;
+			}
+		);
+	}
+
 	addTeam() {
 		let vm = this;
 		this.api.addTeamToPlayer(vm.pid, vm.selectedTeam.id).then(

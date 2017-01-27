@@ -6,7 +6,7 @@
 			<div show.bind="!team.logo" class="img-team-logo">
 				<span class="chip-icon team-logo" title="${team.name}">${team.tag}</span>
 			</div>
-			${team.name}
+			<a route-href="route: team; params.bind: {id: team.id}">${team.name}</a>
 		</header>
 		<div class="card-body">
 			<div class="column col-centered">

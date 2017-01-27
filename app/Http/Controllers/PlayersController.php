@@ -140,6 +140,12 @@ class PlayersController extends Controller
 		if (!($player = Player::find($request->player_id)))
 			return new JsonResponse(new Error('not_found', 'Le joueur n\'a pas été trouvé'), 400);
 
+		if ($request->team_id == 0) {
+			$player->team_id = 0;
+			$player->save();
+			return new JsonResponse(null, 201);
+		}
+
 		if (!($team = Team::find($request->team_id)))
 			return new JsonResponse(new Error('not_found', 'L\'équipe n\'a pas été trouvée'), 400);
 

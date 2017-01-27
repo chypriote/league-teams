@@ -8,7 +8,7 @@ export class Player {
 	success; error; refreshing;
 
 	constructor() { }
-	
+
 	quickRefresh() {
 		let vm = this;
 		let riot = new RiotAPI;
@@ -23,17 +23,17 @@ export class Player {
 			lps: undefined
 		};
 		this.refreshing = true;
-		
+
 		riot.summonerById(this.player.riot_id).then(
 			function (response: any) {
 				updated.summoner_name = response.name;
-				
+
 				riot.summonerLeague(vm.player.riot_id).then(
 					function (response) {
 						updated.tier = PlayerUtility.rankToDatabase(response[0].tier);
 						updated.division = PlayerUtility.romanToDecimal(response[0].entries[0].division);
 						updated.lps = response[0].entries[0].leaguePoints;
-						
+
 						api.updatePlayer(updated)
 							.then(function (response) {
 								Object.assign(vm.player, response);

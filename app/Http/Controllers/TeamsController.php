@@ -28,8 +28,10 @@ class TeamsController extends Controller
 
 	public function show($id)
 	{
-		if ($team = Team::find($id))
+		if ($team = Team::find($id)) {
+			$team->players = Player::where('team_id', $team->id)->orderBy('position', 'asc')->get();
 			return new JsonResponse($team);
+		}
 		return new JsonResponse(null);
 	}
 
