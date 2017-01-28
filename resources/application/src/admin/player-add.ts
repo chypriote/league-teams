@@ -11,20 +11,20 @@ export class PlayerAdd {
 	api = new TeamsAPI;
 	name; player;
 	error; success; loading;
-	
+
 	constructor(private ea: EventAggregator) {}
-	
+
 	findPlayer() {
 		let vm = this;
 
 		this.success = false;
 		this.error = false;
 		this.loading = true;
-		
+
 		this.riot.summonerByName(this.name).then(
 			response => {
 				vm.player = response;
-				
+
 				if (vm.player.id) {
 					vm.api.checkPlayer(vm.player.id).then(
 						function () {
@@ -36,12 +36,12 @@ export class PlayerAdd {
 						},
 						error => {vm.error = error; vm.loading = false;}
 					);
-					
+
 				} else {
 					vm.loading = false;
 					vm.error = {message: 'Impossible de récupérer les informations du joueur.'};
 				}
-				
+
 			}, error => vm.error = error);
 	}
 

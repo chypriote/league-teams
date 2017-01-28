@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Models\Team;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Validator;

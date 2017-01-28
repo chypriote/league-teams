@@ -10,8 +10,14 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-cors": "^0.8.2",
         "doctrine/dbal": "^2.5",
-        "league-php/leaguewrap": "^0.7.2"
+        "chypriote/leaguewrap": "^0.7.2"
     },
+    "repositories": [
+        {
+            "url": "https://github.com/chypriote/leaguewrap.git",
+            "type": "git"
+        }
+    ],
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",

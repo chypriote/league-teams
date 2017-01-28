@@ -29,3 +29,9 @@ Route::get('players/latest/{number}', 'PlayersController@latest')->name('latest-
 Route::post('players/join-team', 'PlayersController@joinTeam')->name('join-team');
 
 Route::resource('players', 'PlayersController');
+
+Route::group(['prefix' => 'riot'], function() {
+	Route::get('/summoner/{id}', 'RiotController@getSummoner')->name('summoner');
+	Route::get('/summoner/by-name/{name}', 'RiotController@getSummonerName')->name('summoner-name');
+	Route::get('/summoner/league/{id}', 'RiotController@getSummonerLeague')->name('summoner-league');
+});

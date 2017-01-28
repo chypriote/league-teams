@@ -1,10 +1,10 @@
 <template>
 	<div class="card">
 		<header class="small">
-			<h4>Teammates</h4>
+			<h4>Joueurs</h4>
 		</header>
 		<div class="card-body">
-			<a route-href="route: player; params.bind: {id: player.id}"  class="chip --hoverable" repeat.for="player of teammates">
+			<a route-href="route: player; params.bind: {id: player.id}"  class="chip --hoverable" repeat.for="player of team.players">
 				<img src="${player.images.role}" class="chip-icon">
 				<img src="${player.images.rank}" class="chip-icon">
 				<div class="chip-content" class.bind="player.id === pid ? 'bold' : ''">${player.name}</div>

@@ -1,0 +1,41 @@
+<template>
+	<div class="toast toast-success" show.bind="success">L'équipe a bien été enregistrée.</div>
+	<div class="toast toast-danger" show.bind="error">${error.message}</div>
+	<div class="card">
+		<header>
+			<h3>Edition ${team.name}</h3>
+		</header>
+		<div class="card-body container">
+			<form submit.delegate="editTeam()" class="columns">
+				<div class="column col-8">
+					<fieldset class="form-group">
+						<label class="form-label" for="name">Nom</label>
+						<input id="name" value.bind="team.name" type="text" class="form-input">
+					</fieldset>
+
+					<fieldset class="form-group col-6">
+						<label class="form-label" for="tag">Tag</label>
+						<input id="tag" value.bind="team.tag" type="text" class="form-input">
+					</fieldset>
+
+					<fieldset class="form-group col-8">
+						<label class="form-label" for="logo">Logo path</label>
+						<input id="logo" value.bind="team.logo" type="text" class="form-input">
+					</fieldset>
+				</div>
+				<div class="column col-4">
+					<img src="${team.image}" show.bind="team.logo">
+				</div>
+
+				<div class="form-bar column col-12">
+					<button type="button" class="btn" click.delegate="delete()">
+						Supprimer
+					</button>
+					<button type="submit" class="btn btn-primary">
+						Enregistrer
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</template>

@@ -5,29 +5,7 @@ export class TeamEdit {
 	api = new TeamsAPI();
 	teams; current;
 	error; success;
-	
-	
-	editTeam() {
-		let vm = this;
-		let team = {
-			id: this.current.id,
-			name: this.current.name,
-			logo: this.current.logo,
-			tag: this.current.tag
-		};
-		
-		this.error = null;
-		this.success = null;
-		
-		this.api.updateTeam(team)
-			.then(function (response) {
-				vm.current = response;
-				vm.success = true;
-			}, function (error) {
-				vm.error = '[' + error.response + '] Impossible de sauvegarder l\'équipe';
-			});
-	}
-	
+
 	created() {
 		let client = new TeamsAPI();
 		let vm = this;
@@ -41,10 +19,10 @@ export class TeamEdit {
 			});
 		});
 	}
-	
+
 	activate(params, routeConfig) {
 		this.routeConfig = routeConfig;
-		
+
 		if (params.id) {
 			this.api.getTeam(params.id).then(data => {
 				this.current = data;
@@ -54,6 +32,5 @@ export class TeamEdit {
 				}
 			});
 		}
-		
 	}
 }
