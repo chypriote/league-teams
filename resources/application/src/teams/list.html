@@ -1,33 +1,22 @@
 <template>
+	<require from="../players/player-chip"></require>
+
 	<h3>Equipes</h3>
-	<div class="card inline" repeat.for="team of teams">
-		<header class="bold">
-			<img src="${team.image}" show.bind="team.logo" class="img-team-logo">
-			<div show.bind="!team.logo" class="img-team-logo">
-				<span class="chip-icon team-logo" title="${team.name}">${team.tag}</span>
-			</div>
-			<a route-href="route: team; params.bind: {id: team.id}">${team.name}</a>
-		</header>
-		<div class="card-body">
-			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.top.id}" if.bind="team.top">${team.top.name}</a>
-				<span if.bind="!team.top">-</span>
-			</div>
-			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.jungle.id}" if.bind="team.jungle">${team.jungle.name}</a>
-				<span if.bind="!team.jungle">-</span>
-			</div>
-			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.mid.id}" if.bind="team.mid">${team.mid.name}</a>
-				<span if.bind="!team.mid">-</span>
-			</div>
-			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.adc.id}" if.bind="team.adc">${team.adc.name}</a>
-				<span if.bind="!team.adc">-</span>
-			</div>
-			<div class="column col-centered">
-				<a route-href="route: player; params.bind: {id: team.support.id}" if.bind="team.support">${team.support.name}</a>
-				<span if.bind="!team.support">-</span>
+	<div class="columns">
+		<div class="column col-3" repeat.for="team of teams">
+			<div class="card">
+				<header class="bold">
+					<img src="${team.image}" show.bind="team.logo" class="img-team-logo">
+					<div show.bind="!team.logo" class="img-team-logo">
+						<span class="chip-icon team-logo" title="${team.name}">${team.tag}</span>
+					</div>
+					<a route-href="route: team; params.bind: {id: team.id}">${team.name}</a>
+				</header>
+				<div class="card-body">
+					<div class="column" repeat.for="player of team.players">
+						<player-chip player.bind="player"></player-chip>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

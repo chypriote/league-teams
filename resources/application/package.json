@@ -12,6 +12,7 @@
     "aurelia-bootstrapper": "^2.0.1",
     "aurelia-fetch-client": "^1.0.0",
     "aurelia-http-client": "^1.0.3",
+    "aurelia-infinite-scroll": "^0.2.2",
     "bluebird": "^3.4.1",
     "font-awesome": "^4.7.0"
   },

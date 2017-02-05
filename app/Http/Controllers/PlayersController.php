@@ -24,7 +24,7 @@ class PlayersController extends Controller
 	 */
 	public function index()
 	{
-		$players = Player::orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		$players = Player::orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->paginate(15);
 		foreach ($players as $player) {
 			$player->team;
 			$player->tier = Player::tierText($player->tier);

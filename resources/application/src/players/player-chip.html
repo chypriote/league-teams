@@ -1,0 +1,5 @@
+<template>
+	<img src="${player.images.role}" class="chip-icon" alt="${player.position}" title="${player.position}">
+	<img src="${player.images.rank}" class="chip-icon" alt="${player.tier}" title="${player.tier} ${player.division}">
+	<a route-href="route: player; params.bind: {id: player.id}">${player.name}</a>
+</template>

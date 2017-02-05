@@ -32,6 +32,21 @@ export class PlayerUtility {
 		}
 	}
 	
+	static rankFromDatabase(rank: string) {
+		switch (rank) {
+			case '10_challenger':
+				return 'CHALLENGER';
+			case '20_master':
+				return 'MASTER';
+			case '30_diamond':
+				return 'DIAMOND';
+			case '40_platinum':
+				return 'PLATINUM';
+			default:
+				return null;
+		}
+	}
+
 	static positionToDatabase(position: string) {
 		switch (position) {
 			case 'top':
@@ -49,4 +64,20 @@ export class PlayerUtility {
 		}
 	}
 	
+	static positionFromDatabase(position: string) {
+		switch (position) {
+			case '10_top':
+				return 'top';
+			case '20_jungle':
+				return 'jungle';
+			case '30_mid':
+				return 'mid';
+			case '40_adc':
+				return 'adc';
+			case '50_support':
+				return 'support';
+			default:
+				return null;
+		}
+	}
 }

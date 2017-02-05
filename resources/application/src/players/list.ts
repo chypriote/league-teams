@@ -7,6 +7,8 @@ import {TeamsAPI} from '../utility/teamsAPI';
 export class List {
 	api = new TeamsAPI();
 	players;
+	routeConfig;
+	pages;
 
 	constructor(private ea: EventAggregator) {
 		ea.subscribe(PlayerAdded, msg => this.players.push(msg.player));
@@ -18,18 +20,42 @@ export class List {
 			role: '/assets/roles/32/' + player.position + '.png',
 		}
 	}
-
-	created() {
+	preparePlayers(players) {
 		let vm = this;
-		this.api.getPlayers().then(function (data) {
-			vm.players = data;
-			vm.players.forEach(function (player) {
+		players.forEach(function (player) {
 				player.images = vm.setImages(player);
 				if (player.team && player.team.logo) {
 					player.team.image = '/assets/teams/32/' + player.team.logo + '.png';
 				}
 				return player
 			});
+		return players;
+	}
+
+	created(params, routeConfig) {
+		let vm = this;
+
+		this.api.getPlayers().then(function (data: any) {
+			vm.players = vm.preparePlayers(data.data);
+			vm.pages = {
+				current: data.current_page,
+				last: data.last_page
+			};
+		});
+	}
+
+	activate(params, routeConfig) {
+		this.routeConfig = routeConfig;
+		let vm = this;
+		let page = params.page ? params.page : null;
+
+		this.api.getPlayers(page).then(function (data: any) {
+			vm.players = vm.preparePlayers(data.data);
+			vm.pages = {
+				current: data.current_page,
+				last: data.last_page
+			};
+			vm.routeConfig.navModel.setTitle(vm.pages.current != 1 ? 'Joueurs - Page ' + vm.pages.current : 'Joueurs');
 		});
 	}
 

@@ -7,10 +7,10 @@ export class TeamsAPI {
 		this.client = new HttpClient();
 	}
 
-	getPlayers() {
+	getPlayers(page?: number) {
 		let vm = this;
 		return new Promise(function (resolve, reject) {
-			vm.client.get('/api/players')
+			vm.client.get('/api/players?page=' + page)
 				.then(response => resolve(JSON.parse(response.response)))
 				.catch(error => reject(JSON.parse(error.response)));
 		});

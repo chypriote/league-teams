@@ -16,11 +16,6 @@ class TeamsController extends Controller
 		$teams = Team::orderBy('name', 'asc')->get();
 		foreach ($teams as $team) {
 			$team->players = Player::where('team_id', $team->id)->orderBy('position', 'asc')->get();
-			foreach ($team['players'] as $player) {
-				$player->position = $player->positionText($player->position);
-				$team[$player['position']] = [ 'name' => $player['name'], 'id' => $player['id']];
-			}
-			unset($team['players']);
 		}
 		return new JsonResponse($teams);
 	}

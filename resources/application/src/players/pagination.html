@@ -1,0 +1,7 @@
+<template>
+	<div class="card pagination" >
+		<div class="page-item" repeat.for="i of pages.last" class.bind="i + 1 == pages.current ? 'active' : ''">
+			<a route-href="route: page; params.bind: {page: i + 1}">${i + 1}</a>
+		</div>
+	</div>
+</template>

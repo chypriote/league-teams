@@ -11,6 +11,7 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature('resources');
+    //.plugin('aurelia-infinite-scroll');
 
   if (environment.debug) {
     aurelia.use.developmentLogging();
