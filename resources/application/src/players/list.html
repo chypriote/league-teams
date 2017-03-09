@@ -17,10 +17,11 @@
 			</div>
 		</div>
 	</div>
-	<a class="card inline" route-href="route: player; params.bind: {id: player.id}" repeat.for="player of players">
-		<header class="bold">${player.name}</header>
-		<div class="card-body">
+	<div class="card inline" repeat.for="player of players">
+		<header class="bold">${player.name}		</header>
+		<a class="card-body" route-href="route: player; params.bind: {id: player.id}">
 			<div class="column col-6">
+				<i class="fa fa-snowflake-o highligthed" show.bind="player.recent_update"></i>&nbsp; 
 				${player.summoner_name}
 			</div>
 			<div class="column col-2 col-centered">
@@ -35,7 +36,7 @@
 				<span if.bind="player.tier === 'MASTER' || player.tier === 'CHALLENGER'">${player.lps} LP</span>
 				<span if.bind="player.tier !== 'MASTER' && player.tier !== 'CHALLENGER'">${player.tier.charAt(0)}${player.division}</span>
 			</div>
-		</div>
-	</a>
+		</a>
+	</div>
 
 </template>

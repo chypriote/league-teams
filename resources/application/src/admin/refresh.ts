@@ -21,6 +21,11 @@ export class Refresh {
 					let player = vm.players[i];
 					player.updating = true;
 					vm.handled = vm.players.length - i;
+
+					vm.riot.summonerById(player.riot_id).then(
+						function (response: any) {
+							player.summoner_name = response.name;
+					});
 					vm.riot.summonerLeague(player.riot_id).then(response => {
 						player.leagues = response;
 						player.position = PlayerUtility.positionToDatabase(player.position);

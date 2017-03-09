@@ -18,7 +18,7 @@ class Player extends Model
 	const TIER_PLATINUM = '40_platinum';
 
 	protected $fillable = [
-		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment'
+		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment',
 	];
 	protected $guarded = [
 		'riot_id'
