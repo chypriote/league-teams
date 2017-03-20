@@ -13,7 +13,7 @@ class RiotController
 
 	public function __construct()
 	{
-		$this->api = new Api('4cc2723d-f13c-41dc-85ce-fe5c89534640');
+		$this->api = new Api('RGAPI-4a3b62c3-d357-4a93-bd57-d0a8f54fbf56');
 		$this->api->setRegion('euw');
 
 		$this->summoner = $this->api->summoner();

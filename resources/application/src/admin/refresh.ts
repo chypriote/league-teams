@@ -36,7 +36,7 @@ export class Refresh {
 						vm.api.updatePlayer(player);
 						if (--i) myLoop(i); else vm.loading = false;
 					});
-				}, 1500)
+				}, 3000)
 			})(vm.players.length - 1);
 			
 		});
