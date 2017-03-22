@@ -7,7 +7,7 @@
 			<form submit.delegate="refresh()" class="text-centered">
 				<div class="updater">
 					<div class="chip" repeat.for="player of players" if.bind="player.updating">
-						Mise à jour de ${player.name}... OK !
+						Mise à jour de ${player.name}... <span if.bind="player.updated">OK !</span>
 					</div>
 				</div>
 				<div class="--spaced" class.bind="loading?'form-bar':''">
@@ -15,6 +15,7 @@
 					<button type="submit" class="btn btn-primary" class.bind="loading ?'loading':''">
 						Rafraichir
 					</button>
+					<button type="button" class="btn" show.bind="loading" click.delegate="stopUpdate()">Stop</button>
 				</div>
 			</form>
 		</div>

@@ -191,4 +191,15 @@ class PlayersController extends Controller
 		}
 		return new JsonResponse($players);
 	}
+
+	public function all()
+	{
+		$players = Player::orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		foreach ($players as $player) {
+			$player->team;
+			$player->tier = Player::tierText($player->tier);
+			$player->position = Player::positionText($player->position);
+		}
+		return new JsonResponse($players);
+	}
 }

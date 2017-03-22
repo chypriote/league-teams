@@ -8,7 +8,7 @@ export class List {
 
 	setImages(player) {
 		return {
-			rank: '/assets/tiers/32/' + PlayerUtility.rankFromDatabase(player.tier) + '.png',
+			rank: '/assets/tiers/32/' + PlayerUtility.rankFromDatabase(player.tier).toLowerCase() + '.png',
 			role: '/assets/roles/32/' + PlayerUtility.positionFromDatabase(player.position) + '.png',
 		}
 	}

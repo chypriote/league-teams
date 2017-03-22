@@ -15,6 +15,14 @@ export class TeamsAPI {
 				.catch(error => reject(JSON.parse(error.response)));
 		});
 	}
+	getAllPlayers() {
+		let vm = this;
+		return new Promise(function (resolve, reject) {
+			vm.client.get('/api/players/all')
+				.then(response => resolve(JSON.parse(response.response)))
+				.catch(error => reject(JSON.parse(error.response)));
+		});
+	}
 	getTeamLessPlayers() {
 		let vm = this;
 		return new Promise(function (resolve, reject) {

@@ -27,6 +27,7 @@ Route::get('players/validate-id/{id}', 'PlayersController@idCheck')->name('valid
 Route::get('players/teamless', 'PlayersController@teamless')->name('team-less');
 Route::get('players/latest/{number}', 'PlayersController@latest')->name('latest-players');
 Route::post('players/join-team', 'PlayersController@joinTeam')->name('join-team');
+Route::get('players/all', 'PlayersController@all')->name('all-players');
 
 Route::resource('players', 'PlayersController');
 
