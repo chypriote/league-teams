@@ -17,7 +17,7 @@ Route::get('user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'players'], function() {
+Route::group(['prefix' => 'teams'], function() {
 	Route::get('latest/{number}', 'TeamsController@latest')->name('latest-teams');
 });
 Route::resource('teams', 'TeamsController');
