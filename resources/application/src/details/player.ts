@@ -1,4 +1,4 @@
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../utility/playersAPI';
 import {RiotAPI} from '../utility/riotAPI';
 import {PlayerUtility} from '../utility/player-utility';
 
@@ -12,7 +12,7 @@ export class Player {
 	quickRefresh() {
 		let vm = this;
 		let riot = new RiotAPI;
-		let api = new TeamsAPI();
+		let api = new PlayersAPI();
 		this.error = null;
 		this.success = null;
 		let updated = {
@@ -61,7 +61,7 @@ export class Player {
 
 	activate(params, routeConfig) {
 		this.routeConfig = routeConfig;
-		let api = new TeamsAPI();
+		let api = new PlayersAPI();
 
 		return api.getPlayer(params.id)
 			.then(data => {

@@ -1,25 +1,25 @@
-import {TeamsAPI} from '../utility/teamsAPI';
-import {RiotAPI} from '../utility/riotAPI';
-import {PlayerUtility} from '../utility/player-utility';
+import {PlayersAPI} from '../../utility/playersAPI';
+import {RiotAPI} from '../../utility/riotAPI';
+import {PlayerUtility} from '../../utility/player-utility';
 
 export class Refresh {
-	api = new TeamsAPI();
+	api = new PlayersAPI();
 	riot = new RiotAPI();
 	players;
 	loading; handled; stop;
-	
+
 	stopUpdate() {
 		this.stop = true;
 	}
-	
+
 	refresh() {
 		let vm = this;
-		
+
 		vm.stop = false;
 		vm.loading = true;
 		this.api.getAllPlayers().then(data => {
 			vm.players = data;
-			
+
 			(function myLoop (i) {
 
 				if (vm.stop) {
@@ -56,7 +56,7 @@ export class Refresh {
 				}, 3000);
 
 			})(vm.players.length - 1);
-			
+
 		});
 	}
 }

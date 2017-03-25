@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {TeamsAPI} from "../utility/teamsAPI";
-import {TeamAdded} from "../utility/events";
+import {TeamsAPI} from "../../utility/teamsAPI";
+import {TeamAdded} from "../../utility/events";
 
 @inject(EventAggregator)
 export class TeamsLast {

@@ -1,13 +1,13 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {TeamsAPI} from "../utility/teamsAPI";
-import {PlayerAdded} from "../utility/events";
+import {PlayersAPI} from "../../utility/playersAPI";
+import {PlayerAdded} from "../../utility/events";
 
 @inject(EventAggregator)
 export class PlayersLast {
-	api = new TeamsAPI();
+	api = new PlayersAPI();
 	latest;
-	
+
 	constructor(private ea: EventAggregator) {
 		ea.subscribe(PlayerAdded, msg => {
 			let player = msg.player;
@@ -15,14 +15,14 @@ export class PlayersLast {
 			this.latest.unshift(player);
 		});
 	}
-	
+
 	setImages(player) {
 		return {
 			rank: '/assets/tiers/32/' + player.tier.toLowerCase() + '.png',
 			role: '/assets/roles/32/' + player.position + '.png',
 		}
 	}
-	
+
 	attached() {
 		let vm = this;
 		this.api.latestPlayers(10).then(function(data) {

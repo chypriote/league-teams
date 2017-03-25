@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../utility/playersAPI';
 import {RiotAPI} from '../utility/riotAPI';
 import {PlayerUtility} from '../utility/player-utility';
 
@@ -8,7 +8,7 @@ import {PlayerUtility} from '../utility/player-utility';
 @inject(Router)
 export class Edit {
 	routeConfig; router;
-	api = new TeamsAPI;
+	api = new PlayersAPI;
 	player;
 	refreshing; refreshed;
 	error; success;
@@ -70,9 +70,8 @@ export class Edit {
 
 	activate(params, routeConfig) {
 		this.routeConfig = routeConfig;
-		let client = new TeamsAPI();
 
-		return client.getPlayer(params.id)
+		return this.api.getPlayer(params.id)
 			.then(data => {
 				this.player = data;
 				this.routeConfig.navModel.setTitle(this.player.name);

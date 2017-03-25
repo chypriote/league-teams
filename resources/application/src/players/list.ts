@@ -1,11 +1,11 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {PlayerAdded} from '../utility/events';
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../utility/playersAPI';
 
 @inject(EventAggregator)
 export class List {
-	api = new TeamsAPI();
+	api = new PlayersAPI();
 	players;
 	routeConfig;
 	pages;

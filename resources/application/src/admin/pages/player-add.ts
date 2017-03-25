@@ -1,14 +1,14 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {PlayerUtility} from '../utility/player-utility';
-import {RiotAPI} from '../utility/riotAPI';
-import {TeamsAPI} from '../utility/teamsAPI';
-import {PlayerAdded} from "../utility/events";
+import {PlayerUtility} from '../../utility/player-utility';
+import {RiotAPI} from '../../utility/riotAPI';
+import {PlayersAPI} from '../../utility/playersAPI';
+import {PlayerAdded} from "../../utility/events";
 
 @inject(EventAggregator)
 export class PlayerAdd {
 	riot = new RiotAPI;
-	api = new TeamsAPI;
+	api = new PlayersAPI;
 	name; player;
 	error; success; loading;
 

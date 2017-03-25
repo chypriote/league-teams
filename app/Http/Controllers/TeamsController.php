@@ -85,8 +85,14 @@ class TeamsController extends Controller
 
 	public function destroy($id)
 	{
-		if ($team = Team::find($id))
+		if ($team = Team::find($id)) {
+			$players = $team->players;
+			foreach ($players as $player) {
+				$player->team_id = null;
+				$player->save();
+			}
 			return new JsonResponse($team->delete(), 200);
+		}
 		return new JsonResponse(null, 404);
 	}
 

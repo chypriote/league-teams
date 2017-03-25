@@ -1,7 +1,7 @@
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../utility/playersAPI';
 
 export class PlayerNoTeam {
-    api = new TeamsAPI();
+    api = new PlayersAPI();
     players;
 
     setImages(player) {

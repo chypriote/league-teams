@@ -135,6 +135,10 @@ class PlayersController extends Controller
 		return new JsonResponse(null, 404);
 	}
 
+	/**
+	 * @param Request $request
+	 * @return JsonResponse
+	 */
 	public function joinTeam(Request $request)
 	{
 		if (!($player = Player::find($request->player_id)))
@@ -161,6 +165,10 @@ class PlayersController extends Controller
 		return new JsonResponse(new Error('unknown', 'Une erreur inconnue s\'est produite'), 400);
 	}
 
+	/**
+	 * @param Request $request
+	 * @return JsonResponse
+	 */
 	public function idCheck(Request $request)
 	{
 		$player = Player::where('riot_id', $request->id)->first();
@@ -171,9 +179,12 @@ class PlayersController extends Controller
 		return new JsonResponse(null, 201);
 	}
 
+	/**
+	 * @return JsonResponse
+	 */
 	public function teamless()
 	{
-		$players = Player::where('team_id', 0)->orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		$players = Player::where('team_id', 0)->orWhere('team_id', NULL)->orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
 		foreach ($players as $player) {
 			$player->tier = Player::tierText($player->tier);
 			$player->position = Player::positionText($player->position);
@@ -181,6 +192,10 @@ class PlayersController extends Controller
 		return new JsonResponse($players);
 	}
 
+	/**
+	 * @param $number
+	 * @return JsonResponse
+	 */
 	public function latest($number)
 	{
 		$players = Player::orderBy('created_at', 'desc')->take($number)->get();
@@ -192,13 +207,11 @@ class PlayersController extends Controller
 		return new JsonResponse($players);
 	}
 
-	public function all()
+	public function test()
 	{
-		$players = Player::orderBy('tier', 'asc')->orderBy('division', 'asc')->orderBy('lps', 'desc')->get();
+		$players = Player::all();
 		foreach ($players as $player) {
 			$player->team;
-			$player->tier = Player::tierText($player->tier);
-			$player->position = Player::positionText($player->position);
 		}
 		return new JsonResponse($players);
 	}

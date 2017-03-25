@@ -1,16 +1,17 @@
 import {bindable} from 'aurelia-framework';
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../../utility/playersAPI';
+import {TeamsAPI} from '../../utility/teamsAPI';
 
 export class PlayerTeam {
 	@bindable team;
 	@bindable pid;
-	api = new TeamsAPI();
+	api = new PlayersAPI();
 	selectedTeam;
 	edition; available;
 
 	edit() {
 		if (!this.available)
-			this.api.getTeams().then(data => this.available = data);
+			new TeamsAPI().getTeams().then(data => this.available = data);
 		this.edition = !this.edition;
 	}
 

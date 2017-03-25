@@ -19,7 +19,7 @@
 
 	<div class="card inline" repeat.for="player of players">
 		<header class="bold">
-			<div class="column col-1">${$index}</div>
+			<div class="column col-1">${$index + 1}</div>
 			<div class="column col-9">${player.name}</div>
 		</header>
 		<a class="card-body" route-href="route: player; params.bind: {id: player.id}">

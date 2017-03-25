@@ -1,5 +1,5 @@
 import {bindable} from 'aurelia-framework';
-import {TeamsAPI} from '../utility/teamsAPI';
+import {TeamsAPI} from '../../utility/teamsAPI';
 
 export class TeamEditor {
 	@bindable team;

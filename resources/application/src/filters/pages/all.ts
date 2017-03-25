@@ -1,18 +1,10 @@
-import {inject} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {PlayerAdded} from '../utility/events';
-import {TeamsAPI} from '../utility/teamsAPI';
+import {PlayersAPI} from '../../utility/playersAPI';
 
-@inject(EventAggregator)
 export class All {
-	api = new TeamsAPI();
+	api = new PlayersAPI();
 	players;
 	routeConfig;
 	pages;
-
-	constructor(private ea: EventAggregator) {
-		ea.subscribe(PlayerAdded, msg => this.players.push(msg.player));
-	}
 
 	setImages(player) {
 		return {
@@ -20,6 +12,7 @@ export class All {
 			role: '/assets/roles/32/' + player.position + '.png',
 		}
 	}
+
 	preparePlayers(players) {
 		let vm = this;
 		players.forEach(function (player) {
@@ -32,9 +25,10 @@ export class All {
 		return players;
 	}
 
-	created(params, routeConfig) {
+	activate(params, routeConfig) {
 		let vm = this;
-
+		
+		routeConfig.navModel.setTitle('Tous');
 		this.api.getAllPlayers().then(data => vm.players = vm.preparePlayers(data));
 	}
 }
