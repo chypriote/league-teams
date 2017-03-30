@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {PlayerAdded} from '../utility/events';
 import {PlayersAPI} from '../utility/playersAPI';
+import {PlayerUtility} from '../utility/player-utility';
 
 @inject(EventAggregator)
 export class List {
@@ -27,6 +28,7 @@ export class List {
 				if (player.team && player.team.logo) {
 					player.team.image = '/assets/teams/32/' + player.team.logo + '.png';
 				}
+				player.country_icon = PlayerUtility.countryToIcon(player.country);
 				return player
 			});
 		return players;

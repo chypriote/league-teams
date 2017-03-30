@@ -17,8 +17,14 @@ class Player extends Model
 	const TIER_DIAMOND = '30_diamond';
 	const TIER_PLATINUM = '40_platinum';
 
+	const COUNTRY_FRANCE = 'france';
+	const COUNTRY_BELGIUM = 'belgium';
+	const COUNTRY_SWISS = 'swiss';
+	const COUNTRY_MOROCCO = 'morocco';
+	const COUNTRY_LUXEMBOURG = 'luxembourg';
+
 	protected $fillable = [
-		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment',
+		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment', 'country',
 	];
 	protected $guarded = [
 		'riot_id'
@@ -146,13 +152,29 @@ class Player extends Model
 	 * @return array
 	 */
 	static public function getAvailablePositions()
-{
-	return [
-		Player::POSITION_TOP,
-		Player::POSITION_JUNGLE,
-		Player::POSITION_MID,
-		Player::POSITION_ADC,
-		Player::POSITION_SUPPORT,
-	];
-}
+	{
+		return [
+			Player::POSITION_TOP,
+			Player::POSITION_JUNGLE,
+			Player::POSITION_MID,
+			Player::POSITION_ADC,
+			Player::POSITION_SUPPORT,
+		];
+	}
+
+	/**
+	 * Returns existing countries
+	 *
+	 * @return array
+	 */
+	static public function getAvailableCountries()
+	{
+		return [
+			Player::COUNTRY_FRANCE,
+			Player::COUNTRY_BELGIUM,
+			Player::COUNTRY_SWISS,
+			Player::COUNTRY_MOROCCO,
+			Player::COUNTRY_LUXEMBOURG,
+		];
+	}
 }

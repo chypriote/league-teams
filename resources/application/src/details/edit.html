@@ -23,6 +23,18 @@
 									</fieldset>
 
 									<fieldset class="form-group">
+										<label for="country" class="form-label">Nationalité</label>
+										<select id="country" name="country" value.bind="player.country" class="form-select">
+											<option model.bind="null">&nbsp;</option>
+											<option model.bind="'france'">France</option>
+											<option model.bind="'belgium'">Belgique</option>
+											<option model.bind="'swiss'">Suisse</option>
+											<option model.bind="'morocco'">Maroc</option>
+											<option model.bind="'luxembourg'">Luxembourg</option>
+										</select>
+									</fieldset>
+
+									<fieldset class="form-group">
 										<label for="position" class="form-label">Position</label>
 										<div class="btn-group">
 											<button

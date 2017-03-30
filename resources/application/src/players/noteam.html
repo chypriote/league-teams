@@ -1,32 +1,36 @@
 <template>
-    <div class="card inline header-card">
-        <header class="bold">Nom</header>
-        <div class="card-body">
-            <div class="column col-8 bold">
-                Nom d'invocateur
-            </div>
-            <div class="column col-2 col-centered bold">
-                Position
-            </div>
-            <div class="column col-2 col-centered bold">
-                Rank
-            </div>
-        </div>
+
+	<div class="card inline header-card">
+		<header class="bold col-2">Nom</header>
+		<div class="card-body">
+			<div class="column col-9 bold">
+				Nom d'invocateur
+			</div>
+			<div class="column col-1 col-centered bold">
+				Position
+			</div>
+			<div class="column col-2 col-centered bold">
+				Rank
+			</div>
+		</div>
+	</div>
+
+	<div class="card inline" repeat.for="player of players">
+		<header class="bold col-2">
+			<i class="flag-icon" class.bind="'flag-icon-' + player.country_icon"></i>${player.name}
+		</header>
+	    <a class="card-body" route-href="route: player; params.bind: {id: player.id}">
+	        <div class="column col-9">
+	            ${player.summoner_name}
+	        </div>
+	        <div class="column col-1 col-centered">
+	            <img src="${player.images.role}" alt="${player.position}" title="${player.position}">
+	        </div>
+	        <div class="column col-2 card-lps">
+	            <img src="${player.images.rank}" alt="${player.tier}" title="${player.tier} ${player.division}">
+	            <span if.bind="player.tier === 'MASTER' || player.tier === 'CHALLENGER'">${player.lps} LP</span>
+	            <span if.bind="player.tier !== 'MASTER' && player.tier !== 'CHALLENGER'">${player.tier.charAt(0)}${player.division}</span>
+	        </div>
+	    </a>
     </div>
-    <a class="card inline" route-href="route: player; params.bind: {id: player.id}" repeat.for="player of players">
-        <header class="bold">${player.name}</header>
-        <div class="card-body">
-            <div class="column col-8">
-                ${player.summoner_name}
-            </div>
-            <div class="column col-2 col-centered">
-                <img src="${player.images.role}" alt="${player.position}" title="${player.position}">
-            </div>
-            <div class="column col-2 card-lps">
-                <img src="${player.images.rank}" alt="${player.tier}" title="${player.tier} ${player.division}">
-                <span if.bind="player.tier === 'MASTER' || player.tier === 'CHALLENGER'">${player.lps} LP</span>
-                <span if.bind="player.tier !== 'MASTER' && player.tier !== 'CHALLENGER'">${player.tier.charAt(0)}${player.division}</span>
-            </div>
-        </div>
-    </a>
 </template>

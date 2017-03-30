@@ -66,6 +66,7 @@ class PlayersController extends Controller
 			'riot_id' => 'required',
 			'name' => 'required',
 			'summoner_name' => 'required',
+			'country' => 'nullable|in:' . implode(',', Player::getAvailableCountries()),
 			'position' => 'required|in:' . implode(',', Player::getAvailablePositions()),
 			'tier' => 'required|in:' . implode(',', Player::getAvailableTiers()),
 			'division' => 'required|numeric|min:1|max:5',
@@ -98,6 +99,7 @@ class PlayersController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'id' => 'required',
+			'country' => 'nullable|in:' . implode(',', Player::getAvailableCountries()),
 			'position' => 'nullable|in:' . implode(',', Player::getAvailablePositions()),
 			'tier' => 'nullable|in:' . implode(',', Player::getAvailableTiers()),
 			'division' => 'nullable|numeric|min:1|max:5',

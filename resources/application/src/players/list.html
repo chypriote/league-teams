@@ -2,15 +2,15 @@
 	<require from="./components/pagination"></require>
 
 	<div class="card inline header-card">
-		<header class="bold">Nom</header>
+		<header class="bold col-2">Nom</header>
 		<div class="card-body">
-			<div class="column col-6 bold">
+			<div class="column col-8 bold">
 				Nom d'invocateur
 			</div>
-			<div class="column col-2 col-centered bold">
+			<div class="column col-1 col-centered bold">
 				Equipe
 			</div>
-			<div class="column col-2 col-centered bold">
+			<div class="column col-1 col-centered bold">
 				Position
 			</div>
 			<div class="column col-2 col-centered bold">
@@ -20,17 +20,19 @@
 	</div>
 
 	<div class="card inline" repeat.for="player of players">
-		<header class="bold">${player.name}		</header>
+		<header class="bold col-2">
+			<i class="flag-icon" class.bind="'flag-icon-' + player.country_icon"></i>${player.name}
+		</header>
 		<a class="card-body" route-href="route: player; params.bind: {id: player.id}">
-			<div class="column col-6">
+			<div class="column col-8">
 				<i class="fa fa-snowflake-o highligthed" show.bind="player.recent_update"></i>&nbsp;
 				${player.summoner_name}
 			</div>
-			<div class="column col-2 col-centered">
+			<div class="column col-1 col-centered">
 				<img src="${player.team.image}" show.bind="player.team.logo" class="img-team-logo" title="${player.team.name}">
 				<span show.bind="player.team && !player.team.logo" class="chip-icon team-logo" title="${player.team.name}">${player.team.tag}</span>
 			</div>
-			<div class="column col-2 col-centered">
+			<div class="column col-1 col-centered">
 				<img src="${player.images.role}" alt="${player.position}" title="${player.position}">
 			</div>
 			<div class="column col-2 card-lps">

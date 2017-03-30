@@ -1,5 +1,5 @@
 export class PlayerUtility {
-	
+
 	static romanToDecimal(roman: string) {
 		switch (roman) {
 			case "I":
@@ -16,7 +16,7 @@ export class PlayerUtility {
 				return 0;
 		}
 	}
-	
+
 	static rankToDatabase(rank: string) {
 		switch (rank) {
 			case 'CHALLENGER':
@@ -31,7 +31,7 @@ export class PlayerUtility {
 				return null;
 		}
 	}
-	
+
 	static rankFromDatabase(rank: string) {
 		switch (rank) {
 			case '10_challenger':
@@ -63,7 +63,7 @@ export class PlayerUtility {
 				return null;
 		}
 	}
-	
+
 	static positionFromDatabase(position: string) {
 		switch (position) {
 			case '10_top':
@@ -76,6 +76,23 @@ export class PlayerUtility {
 				return 'adc';
 			case '50_support':
 				return 'support';
+			default:
+				return null;
+		}
+	}
+
+	static countryToIcon(country: string) {
+		switch (country) {
+			case 'france':
+				return 'fr';
+			case 'belgium':
+				return 'be';
+			case 'morocco':
+				return 'mor';
+			case 'swiss':
+				return 'ch';
+			case 'luxembourg':
+				return 'lux';
 			default:
 				return null;
 		}

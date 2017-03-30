@@ -53,9 +53,11 @@ export class Edit {
 			position: PlayerUtility.positionToDatabase(this.player.position),
 			tier: this.player.leagues ? PlayerUtility.rankToDatabase(this.player.leagues[0].tier) : null,
 			division: this.player.leagues ? PlayerUtility.romanToDecimal(this.player.leagues[0].entries[0].division) : null,
+			country: this.player.country,
 			lps: this.player.leagues ? this.player.leagues[0].entries[0].leaguePoints : null,
 			comment: this.player.comment
 		};
+		console.log(player);
 
 		this.error = null;
 		this.success = null;

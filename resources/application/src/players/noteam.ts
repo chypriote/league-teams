@@ -1,4 +1,5 @@
 import {PlayersAPI} from '../utility/playersAPI';
+import {PlayerUtility} from '../utility/player-utility';
 
 export class PlayerNoTeam {
     api = new PlayersAPI();
@@ -17,6 +18,7 @@ export class PlayerNoTeam {
             vm.players = data;
             vm.players.forEach(function (player) {
                 player.images = vm.setImages(player);
+								player.country_icon = PlayerUtility.countryToIcon(player.country);
                 return player
             });
         });
