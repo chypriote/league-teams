@@ -22,6 +22,7 @@ class Player extends Model
 	const COUNTRY_SWISS = 'swiss';
 	const COUNTRY_MOROCCO = 'morocco';
 	const COUNTRY_LUXEMBOURG = 'luxembourg';
+	const COUNTRY_GERMANY = 'germany';
 
 	protected $fillable = [
 		'name', 'summoner_name', 'position', 'tier', 'division', 'lps', 'comment', 'country',
@@ -175,6 +176,7 @@ class Player extends Model
 			Player::COUNTRY_SWISS,
 			Player::COUNTRY_MOROCCO,
 			Player::COUNTRY_LUXEMBOURG,
+			Player::COUNTRY_GERMANY,
 		];
 	}
 }

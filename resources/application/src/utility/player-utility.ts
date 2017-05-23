@@ -93,6 +93,8 @@ export class PlayerUtility {
 				return 'ch';
 			case 'luxembourg':
 				return 'lux';
+			case 'germany':
+				return 'de';
 			default:
 				return null;
 		}
