@@ -13,14 +13,14 @@ class RiotController
 
 	public function __construct()
 	{
-		$this->api = new Api('RGAPI-4a3b62c3-d357-4a93-bd57-d0a8f54fbf56');
+		$this->api = new Api('RGAPI-7848906a-b45a-4796-a866-6937281277f3');
 		$this->api->setRegion('euw');
 
 		$this->summoner = $this->api->summoner();
-		$this->summoner->selectVersion('v1.4');
+		$this->summoner->selectVersion('v3');
 
 		$this->league = $this->api->league();
-		$this->league->selectVersion('v2.5');
+		$this->league->selectVersion('v3');
 	}
 
 	/**
@@ -56,9 +56,22 @@ class RiotController
 		return new JsonResponse(null, 404);
 	}
 
-	public function getSummonerLeague($id)
+	public function getSummonerLeague(int $id)
 	{
-		if ($leagues = $this->league->league((int)$id, true)) {
+		if ($infos = $this->league->league($id)) {
+			foreach ($infos as $league) {
+				$array = [
+					'tier' => $league->get('tier'),
+					'queue' => $league->get('queue'),
+					'entries' => [
+						[
+							'leaguePoints' => $league->entry($id)->get('leaguePoints'),
+							'division' => $league->entry($id)->get('rank'),
+						],
+					]
+				];
+				$leagues[] = $array;
+			}
 			return new JsonResponse($leagues, 200);
 		}
 		return new JsonResponse(null, 404);

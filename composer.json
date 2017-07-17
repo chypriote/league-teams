@@ -10,11 +10,11 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-cors": "^0.8.2",
         "doctrine/dbal": "^2.5",
-        "chypriote/leaguewrap": "^0.7.2"
+        "alabama/leaguewrap": "dev-master"
     },
     "repositories": [
         {
-            "url": "https://github.com/chypriote/leaguewrap.git",
+            "url": "https://github.com/alabama/leaguewrap.git",
             "type": "git"
         }
     ],
