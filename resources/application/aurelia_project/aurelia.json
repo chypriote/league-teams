@@ -140,6 +140,11 @@
 						"path": "../node_modules/aurelia-testing/dist/amd",
 						"main": "aurelia-testing",
 						"env": "dev"
+					},
+					{
+						"name": "lodash",
+						"path": "../node_modules/lodash",
+						"main": "lodash.min"
 					}
 				]
 			}

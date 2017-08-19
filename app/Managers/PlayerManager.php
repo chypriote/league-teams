@@ -37,7 +37,7 @@ class PlayerManager {
 				$player->summoner_name = $object->summoner_name;
 				$player->recent_update = true;
 		}
-		$player->country = $object->country;
+		$player->country = $object->country ? $object->country : $player->country;
 		$player->position = $object->position ? $object->position : $player->position;
 		$player->tier = $object->tier ? $object->tier : $player->tier;
 		$player->division = $object->division ? $object->division : $player->division;

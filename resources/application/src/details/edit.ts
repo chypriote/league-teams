@@ -3,7 +3,7 @@ import {Router} from 'aurelia-router';
 import {PlayersAPI} from '../utility/playersAPI';
 import {RiotAPI} from '../utility/riotAPI';
 import {PlayerUtility} from '../utility/player-utility';
-
+import * as _ from 'lodash';
 
 @inject(Router)
 export class Edit {
@@ -46,22 +46,24 @@ export class Edit {
 
 	editPlayer() {
 		let vm = this;
+		let league = _.find(vm.player.leagues, function (league) {
+			return league.queue === 'RANKED_SOLO_5x5';
+		});
+		
 		let player = {
 			id: this.player.id,
 			name: this.player.name ? this.player.name : this.player.summoner_name,
 			summoner_name: this.player.summoner_name,
 			position: PlayerUtility.positionToDatabase(this.player.position),
-			tier: this.player.leagues ? PlayerUtility.rankToDatabase(this.player.leagues[0].tier) : null,
-			division: this.player.leagues ? PlayerUtility.romanToDecimal(this.player.leagues[0].entries[0].division) : null,
+			tier: this.player.leagues ? PlayerUtility.rankToDatabase(league.tier) : null,
+			division: this.player.leagues ? PlayerUtility.romanToDecimal(league.entries[0].division) : null,
 			country: this.player.country,
-			lps: this.player.leagues ? this.player.leagues[0].entries[0].leaguePoints : null,
+			lps: this.player.leagues ? league.leaguePoints : null,
 			comment: this.player.comment
 		};
-		console.log(player);
-
+		
 		this.error = null;
 		this.success = null;
-
 		this.api.updatePlayer(player)
 			.then(function (response) {
 				vm.router.navigateToRoute('player', {id: player.id});

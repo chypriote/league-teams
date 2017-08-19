@@ -1,6 +1,7 @@
 import {PlayersAPI} from '../../utility/playersAPI';
 import {RiotAPI} from '../../utility/riotAPI';
 import {PlayerUtility} from '../../utility/player-utility';
+import * as _ from 'lodash';
 
 export class Refresh {
 	api = new PlayersAPI();
@@ -39,11 +40,14 @@ export class Refresh {
 							//Retrieve summoner's leagues
 							vm.riot.summonerLeague(player.riot_id)
 								.then(response => {
+									let league = _.find(response, function (league) {
+										return league.queue === 'RANKED_SOLO_5x5';
+									});
 									player.leagues = response;
 									player.position = PlayerUtility.positionToDatabase(player.position);
-									player.tier = PlayerUtility.rankToDatabase(player.leagues[0].tier);
-									player.division = PlayerUtility.romanToDecimal(player.leagues[0].entries[0].division);
-									player.lps = player.leagues[0].entries[0].leaguePoints;
+									player.tier = PlayerUtility.rankToDatabase(league.tier);
+									player.division = PlayerUtility.romanToDecimal(league.entries[0].division);
+									player.lps = league.entries[0].leaguePoints;
 									player.updated = true;
 									vm.api.updatePlayer(player);
 

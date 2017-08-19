@@ -1,6 +1,7 @@
 import {PlayersAPI} from '../utility/playersAPI';
 import {RiotAPI} from '../utility/riotAPI';
 import {PlayerUtility} from '../utility/player-utility';
+import * as _ from 'lodash';
 
 export class Player {
 	routeConfig;
@@ -30,9 +31,12 @@ export class Player {
 
 				riot.summonerLeague(vm.player.riot_id).then(
 					function (response) {
-						updated.tier = PlayerUtility.rankToDatabase(response[0].tier);
-						updated.division = PlayerUtility.romanToDecimal(response[0].entries[0].division);
-						updated.lps = response[0].entries[0].leaguePoints;
+						let league = _.find(response, function (league) {
+							return league.queue === 'RANKED_SOLO_5x5';
+						});
+						updated.tier = PlayerUtility.rankToDatabase(league.tier);
+						updated.division = PlayerUtility.romanToDecimal(league.entries[0].division);
+						updated.lps = league.entries[0].leaguePoints;
 
 						api.updatePlayer(updated)
 							.then(function (response) {

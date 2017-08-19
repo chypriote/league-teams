@@ -4,6 +4,7 @@ import {PlayerUtility} from '../../utility/player-utility';
 import {RiotAPI} from '../../utility/riotAPI';
 import {PlayersAPI} from '../../utility/playersAPI';
 import {PlayerAdded} from "../../utility/events";
+import * as _ from 'lodash';
 
 @inject(EventAggregator)
 export class PlayerAdd {
@@ -30,7 +31,7 @@ export class PlayerAdd {
 						function () {
 							vm.loading = false;
 							vm.riot.summonerLeague(vm.player.id).then(
-								response => {vm.player.leagues = response; vm.player.set = true;},
+								response => { vm.player.leagues = response; vm.player.set = true; },
 								error => vm.error = {message: 'Impossible de récupérer les leagues du joueur'}
 							);
 						},
@@ -51,14 +52,18 @@ export class PlayerAdd {
 
 	submitPlayer() {
 		let vm = this;
+		let league = _.find(vm.player.leagues, function (league) {
+			return league.queue === 'RANKED_SOLO_5x5';
+		});
+
 		let player = {
 			name: this.player.real_name ? this.player.real_name : this.player.name,
 			summoner_name: this.player.name,
 			riot_id: this.player.id,
 			position: PlayerUtility.positionToDatabase(this.player.position),
-			tier: PlayerUtility.rankToDatabase(this.player.leagues[0].tier),
-			division: PlayerUtility.romanToDecimal(this.player.leagues[0].entries[0].division),
-			lps: this.player.leagues[0].entries[0].leaguePoints,
+			tier: PlayerUtility.rankToDatabase(league.tier),
+			division: PlayerUtility.romanToDecimal(league.entries[0].division),
+			lps: league.entries[0].leaguePoints,
 		};
 
 		this.error = null;
