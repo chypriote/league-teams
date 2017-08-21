@@ -49,16 +49,16 @@ export class Edit {
 		let league = _.find(vm.player.leagues, function (league) {
 			return league.queue === 'RANKED_SOLO_5x5';
 		});
-		
+	
 		let player = {
 			id: this.player.id,
 			name: this.player.name ? this.player.name : this.player.summoner_name,
 			summoner_name: this.player.summoner_name,
 			position: PlayerUtility.positionToDatabase(this.player.position),
-			tier: this.player.leagues ? PlayerUtility.rankToDatabase(league.tier) : null,
-			division: this.player.leagues ? PlayerUtility.romanToDecimal(league.entries[0].division) : null,
+			tier: league ? PlayerUtility.rankToDatabase(league.tier) : null,
+			division: league ? PlayerUtility.romanToDecimal(league.entries[0].division) : null,
+			lps: league ? league.leaguePoints : null,
 			country: this.player.country,
-			lps: this.player.leagues ? league.leaguePoints : null,
 			comment: this.player.comment
 		};
 		

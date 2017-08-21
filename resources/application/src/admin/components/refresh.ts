@@ -43,7 +43,7 @@ export class Refresh {
 									let league = _.find(response, function (league) {
 										return league.queue === 'RANKED_SOLO_5x5';
 									});
-									player.leagues = response;
+
 									player.position = PlayerUtility.positionToDatabase(player.position);
 									player.tier = PlayerUtility.rankToDatabase(league.tier);
 									player.division = PlayerUtility.romanToDecimal(league.entries[0].division);
