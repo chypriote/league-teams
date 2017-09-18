@@ -27,8 +27,8 @@ function writeBundles() {
 function moveBundles() {
   	return gulp.src('index.html')
   		.pipe(shell([
-  			'IF EXIST app-bundle.js mv app-bundle.js ../../public ',
-  			'IF EXIST app-bundle.js.map mv app-bundle.js.map ../../public',
-  			'IF EXIST vendor-bundle.js mv vendor-bundle.js ../../public'
+			'mv app-bundle.js ../../public ',
+			'mv app-bundle.js.map ../../public',
+			'mv vendor-bundle.js ../../public'
 		]));
 }
