@@ -8,8 +8,6 @@
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
   },
   "globalDependencies": {
-    "url-search-params-typing": "github:RomkeVdMeulen/URLSearchParams",
-    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20161120230953",
-    "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20161214010628"
+    "url-search-params-typing": "github:RomkeVdMeulen/URLSearchParams"
   }
 }

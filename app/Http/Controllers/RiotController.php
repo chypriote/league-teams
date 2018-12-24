@@ -13,7 +13,7 @@ class RiotController
 
 	public function __construct()
 	{
-		$this->api = new Api('RGAPI-c12e4fdb-a83b-4188-bc75-ebcabbe52681');
+		$this->api = new Api(env('API_KEY'));
 		$this->api->setRegion('euw');
 
 		$this->summoner = $this->api->summoner();
@@ -43,6 +43,8 @@ class RiotController
 	/**
 	 * @param string $name
 	 * @return JsonResponse
+     * /coucou
+     * Pookiehihihihi
 	 */
 	public function getSummonerName($name)
 	{
@@ -56,17 +58,17 @@ class RiotController
 		return new JsonResponse(null, 404);
 	}
 
-	public function getSummonerLeague(int $id)
+	public function getSummonerLeague($id)
 	{
-		if ($infos = $this->league->league($id)) {
+		if ($infos = $this->league->position($id)) {
 			foreach ($infos as $league) {
 				$array = [
 					'tier' => $league->get('tier'),
-					'queue' => $league->get('queue'),
+					'queue' => $league->get('queueType'),
 					'entries' => [
 						[
-							'leaguePoints' => $league->entry($id)->get('leaguePoints'),
-							'division' => $league->entry($id)->get('rank'),
+							'leaguePoints' => $league->get('leaguePoints'),
+							'division' => $league->get('rank'),
 						],
 					]
 				];

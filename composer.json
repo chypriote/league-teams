@@ -10,7 +10,7 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-cors": "^0.8.2",
         "doctrine/dbal": "^2.5",
-        "alabama/leaguewrap": "dev-master"
+        "alabama/leaguewrap": "^1.0"
     },
     "repositories": [
         {

@@ -73,7 +73,7 @@ gulp.task('reload', function () {
 
 gulp.task('serve', function () {
 	browserSync({
-		proxy: 'players.local',
+		proxy: 'team-elo.local',
 		online: false
 	});
 });
